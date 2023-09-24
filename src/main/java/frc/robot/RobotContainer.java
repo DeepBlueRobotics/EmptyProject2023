@@ -4,12 +4,21 @@
 
 package frc.robot;
 
-import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.Commands;
 
+import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj.XboxController.Axis;
+import org.carlmontrobotics.robotcode2023.subsystems.Drivetrain;
+
+import org.tea199.EmptyProject2023.subsystems.Drivetrain;
 public class RobotContainer {
+
   public RobotContainer() {
-    configureBindings();
+
+   public final Drivetrain drivetrain = new Drivetrain();
+
+    
+  }
+    
   }
 
   private void configureBindings() {}
