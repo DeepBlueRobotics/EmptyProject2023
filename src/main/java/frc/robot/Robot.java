@@ -65,11 +65,11 @@ public class Robot extends TimedRobot {
     double speed = -(controller.getRawAxis(1));
     double turn = (controller.getRawAxis(4));
 
-    double left = speed+turn;
-    double right = speed-turn;
+    double left = speed-turn;
+    double right = speed+turn;
     
     drivetrain.driveForward(left,right);
-    drivetrain.turn(turn);
+    //drivetrain.turn(turn);
   }
 
   @Override

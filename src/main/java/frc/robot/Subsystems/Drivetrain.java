@@ -18,21 +18,20 @@ CANSparkMax motor5 = MotorControllerFactory.createSparkMax(5,MotorConfig.NEO_550
 CANSparkMax motor6 = MotorControllerFactory.createSparkMax(6,MotorConfig.NEO_550);
 MotorControllerGroup leftMotors = new MotorControllerGroup(motor1,motor2,motor3);
 MotorControllerGroup rightMotors = new MotorControllerGroup(motor4, motor5, motor6);
-public void turn() {
 
-}
 
-public void driveForward(double y1, double y2) {
+public void driveForward(double y1,double y2) {
     leftMotors.set(y1);
     rightMotors.set(y2);
 }
 public void turn(double x1) {
     if(x1>0) {
         leftMotors.set(x1);
-        rightMotors.set(-x1);
-    } else if(x1<0) {
-        leftMotors.set(-x1);
-        leftMotors.set(x1);
+        rightMotors.set(1-x1);
+    } 
+    if(x1<0) {
+        leftMotors.set(1-x1);
+        rightMotors.set(x1);
     }
 }
 }

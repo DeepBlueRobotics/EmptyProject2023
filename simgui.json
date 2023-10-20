@@ -1,0 +1,36 @@
+{
+  "HALProvider": {
+    "Other Devices": {
+      "SparkMax[1]": {
+        "header": {
+          "open": true
+        }
+      },
+      "SparkMax[2]": {
+        "header": {
+          "open": true
+        }
+      },
+      "SparkMax[3]": {
+        "header": {
+          "open": true
+        }
+      },
+      "SparkMax[4]": {
+        "header": {
+          "open": true
+        }
+      },
+      "SparkMax[5]": {
+        "header": {
+          "open": true
+        }
+      }
+    }
+  },
+  "NTProvider": {
+    "types": {
+      "/FMSInfo": "FMSInfo"
+    }
+  }
+}
