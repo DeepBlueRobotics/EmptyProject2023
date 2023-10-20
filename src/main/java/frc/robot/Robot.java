@@ -9,7 +9,7 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import frc.robot.Subsystems.Drivetrain;
 import edu.wpi.first.wpilibj.XboxController;
-
+import edu.wpi.first.wpilibj.drive.*;
 
 public class Robot extends TimedRobot {
   
@@ -17,6 +17,7 @@ public class Robot extends TimedRobot {
   private Drivetrain drivetrain = new Drivetrain();
   private RobotContainer m_robotContainer;
   private XboxController controller = new XboxController(0);
+  
   @Override
   public void robotInit() {
     m_robotContainer = new RobotContainer();
@@ -66,7 +67,9 @@ public class Robot extends TimedRobot {
 
     double left = speed+turn;
     double right = speed-turn;
-    drivetrain.drive(left,right);
+    
+    drivetrain.driveForward(left,right);
+    drivetrain.turn(turn);
   }
 
   @Override
