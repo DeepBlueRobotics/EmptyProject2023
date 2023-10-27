@@ -12,14 +12,14 @@ import frc.SubSystems.Drivetrain;
 import edu.wpi.first.wpilibj.XboxController;
 public class Robot extends TimedRobot {
   private Command m_autonomousCommand;
-
-  private XboxController controller = new XboxController(0);
-  
-
-  private RobotContainer m_robotContainer;
+//___________________________________________________________________
+//Kenneth's Valuble Variables
   private Drivetrain drive = new Drivetrain();
+  private XboxController controller = new XboxController(0);
   Timer timer = new Timer();
   boolean tank = false;
+//___________________________________________________________________
+  private RobotContainer m_robotContainer;
   @Override
   public void robotInit() {
     m_robotContainer = new RobotContainer();
@@ -68,11 +68,19 @@ public class Robot extends TimedRobot {
   
   @Override
   public void teleopPeriodic() {
-    double speed = -controller.getRawAxis(1);
-    double turn = controller.getRawAxis(4);
-    double left = speed - turn;
-    double right = speed + turn;
-    drive.drive(left, right);
+    if (!tank) {
+      double speed = -controller.getRawAxis(1);
+      double turn = controller.getRawAxis(2);
+      double left = speed - turn;
+      double right = speed + turn;
+      drive.drive(left, right);
+    }
+   
+    if (tank) {
+      double loogi = -controller.getRawAxis(1);
+      double roogi = -controller.getRawAxis(3);
+      drive.drive(loogi,roogi);
+    }
 
     if (controller.getXButtonPressed()) {
       if(tank) {
