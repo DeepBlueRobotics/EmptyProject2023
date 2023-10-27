@@ -12,10 +12,14 @@ import frc.SubSystems.Drivetrain;
 import edu.wpi.first.wpilibj.XboxController;
 public class Robot extends TimedRobot {
   private Command m_autonomousCommand;
+
   private XboxController controller = new XboxController(0);
+  
+
   private RobotContainer m_robotContainer;
   private Drivetrain drive = new Drivetrain();
   Timer timer = new Timer();
+  boolean tank = false;
   @Override
   public void robotInit() {
     m_robotContainer = new RobotContainer();
@@ -69,6 +73,15 @@ public class Robot extends TimedRobot {
     double left = speed - turn;
     double right = speed + turn;
     drive.drive(left, right);
+
+    if (controller.getXButtonPressed()) {
+      if(tank) {
+        tank = false;
+      }
+      if(!tank) {
+        tank = true;
+      }
+    }
   }
 
   @Override
