@@ -7,12 +7,13 @@ package frc.robot;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
-
+import frc.SubSystems.Drivetrain;
+import edu.wpi.first.wpilibj.XboxController;
 public class Robot extends TimedRobot {
   private Command m_autonomousCommand;
-
+  private XboxController controller = new XboxController(0);
   private RobotContainer m_robotContainer;
-
+  private Drivetrain drive = new Drivetrain();
   @Override
   public void robotInit() {
     m_robotContainer = new RobotContainer();
@@ -53,9 +54,15 @@ public class Robot extends TimedRobot {
       m_autonomousCommand.cancel();
     }
   }
-
+  
   @Override
-  public void teleopPeriodic() {}
+  public void teleopPeriodic() {
+    double speed = -controller.getRawAxis(1);
+    double turn = controller.getRawAxis(4);
+    double left = speed - turn;
+    double right = speed + turn;
+    drive.drive(left, right);
+  }
 
   @Override
   public void teleopExit() {}
