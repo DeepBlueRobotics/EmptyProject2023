@@ -10,12 +10,15 @@ import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import frc.robot.Subsystems.Drivetrain;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.drive.*;
+import frc.robot.Subsystems.Drivetrain;
+import edu.wpi.first.wpilibj.XboxController;
 
 public class Robot extends TimedRobot {
   
   private Command m_autonomousCommand;
-  private Drivetrain drivetrain = new Drivetrain();
+  private RobotContainer robotContain = new RobotContainer();
   private RobotContainer m_robotContainer;
+  private Drivetrain drivetrain = new Drivetrain();
   private XboxController controller = new XboxController(0);
   
   @Override
@@ -62,14 +65,15 @@ public class Robot extends TimedRobot {
 
   @Override
   public void teleopPeriodic() {
+    
     double speed = -(controller.getRawAxis(1));
     double turn = (controller.getRawAxis(4));
+    
 
     double left = speed-turn;
     double right = speed+turn;
-    
+
     drivetrain.driveForward(left,right);
-    //drivetrain.turn(turn);
   }
 
   @Override

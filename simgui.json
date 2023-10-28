@@ -1,6 +1,11 @@
 {
   "HALProvider": {
     "Other Devices": {
+      "RelativeEncoder[1]": {
+        "header": {
+          "open": true
+        }
+      },
       "SparkMax[1]": {
         "header": {
           "open": true
