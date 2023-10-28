@@ -6,7 +6,7 @@ import com.revrobotics.CANSparkMax;
 import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
 
 public class Drivetrain {
-    private boolean tank = false;
+    private boolean isTank = false;
     CANSparkMax rightMotor = MotorControllerFactory.createSparkMax(1,MotorConfig.NEO);
     CANSparkMax leftMotor = MotorControllerFactory.createSparkMax(2,MotorConfig.NEO);
    
@@ -16,15 +16,10 @@ public class Drivetrain {
     }
     
     public void swap() {
-        if (tank) {
-            tank = true;
-        }
-        if(!tank) {
-            tank = false;
-        }
+        isTank = !isTank;
     }
 
     public boolean isTank() {
-        return tank;
+        return isTank;
     }
 }
