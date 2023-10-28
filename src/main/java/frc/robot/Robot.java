@@ -68,18 +68,17 @@ public class Robot extends TimedRobot {
   
   @Override
   public void teleopPeriodic() {
-    if (!tank) {
-      double speed = -controller.getRawAxis(1);
-      double turn = controller.getRawAxis(2);
+    double speed = -controller.getLeftY();
+     double turn = controller.getLeftX();
+    if (drive.swap()) {
       double left = speed - turn;
       double right = speed + turn;
       drive.drive(left, right);
     }
    
-    if (tank) {
-      double loogi = -controller.getRawAxis(1);
-      double roogi = -controller.getRawAxis(3);
-      drive.drive(loogi,roogi);
+    if (!drive.swap()) {
+      double rightYAxis = -controller.getRightY();
+      drive.drive(speed,rightYAxis);
     }
 
     if (controller.getXButtonPressed()) {

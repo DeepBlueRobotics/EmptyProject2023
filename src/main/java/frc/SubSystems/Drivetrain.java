@@ -6,14 +6,21 @@ import com.revrobotics.CANSparkMax;
 import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
 
 public class Drivetrain {
-    CANSparkMax rightMotor1 = MotorControllerFactory.createSparkMax(1,MotorConfig.NEO);
-    CANSparkMax rightMotor2 = MotorControllerFactory.createSparkMax(2,MotorConfig.NEO);
-    CANSparkMax leftMotor1 = MotorControllerFactory.createSparkMax(3,MotorConfig.NEO);
-    CANSparkMax leftMotor2 = MotorControllerFactory.createSparkMax(4,MotorConfig.NEO);
-    MotorControllerGroup rightGroup = new MotorControllerGroup(rightMotor1, rightMotor2);
-    MotorControllerGroup leftGroup = new MotorControllerGroup(leftMotor1, leftMotor2);
-    public void drive(double goober,double yoober) {
-        rightGroup.set(yoober);
-        leftGroup.set(goober);
+    boolean tank = false;
+    CANSparkMax rightMotor = MotorControllerFactory.createSparkMax(1,MotorConfig.NEO);
+    CANSparkMax leftMotor = MotorControllerFactory.createSparkMax(2,MotorConfig.NEO);
+   
+    public void drive(double left,double right) {
+        rightMotor.set(right);
+        leftMotor.set(left);
+    }
+    public boolean swap() {
+        if (tank) {
+            tank = false;
+        }
+        if (!tank) {
+            tank = true;
+        }
+        return tank;
     }
 }
