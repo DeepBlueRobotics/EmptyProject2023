@@ -14,10 +14,10 @@ public class Robot extends TimedRobot {
   private Command m_autonomousCommand;
 //___________________________________________________________________
 //Kenneth's Valuble Variables
-  private Drivetrain drive = new Drivetrain();
+  private Drivetrain drivetrain = new Drivetrain();
   private XboxController controller = new XboxController(0);
   Timer timer = new Timer();
-  boolean tank = false;
+  
 //___________________________________________________________________
   private RobotContainer m_robotContainer;
   @Override
@@ -28,6 +28,7 @@ public class Robot extends TimedRobot {
   @Override
   public void robotPeriodic() {
     CommandScheduler.getInstance().run();
+
   }
 
   @Override
@@ -43,16 +44,17 @@ public class Robot extends TimedRobot {
   public void autonomousInit() {
     m_autonomousCommand = m_robotContainer.getAutonomousCommand();
     timer.start();
-    drive.drive(0.5,0.5);
+    drivetrain.drive(0.5,0.5);
     if (m_autonomousCommand != null) {
       m_autonomousCommand.schedule();
     }
   }
+  
 
   @Override
   public void autonomousPeriodic() {
     if (timer.get() > 10) {
-      drive.drive(0, 0);
+      drivetrain.drive(0, 0);
     } 
   }
 
@@ -70,24 +72,15 @@ public class Robot extends TimedRobot {
   public void teleopPeriodic() {
     double speed = -controller.getLeftY();
      double turn = controller.getLeftX();
-    if (drive.swap()) {
+    if (drivetrain.isTank()) {
       double left = speed - turn;
       double right = speed + turn;
-      drive.drive(left, right);
+      drivetrain.drive(left, right);
     }
    
-    if (!drive.swap()) {
+    if (!drivetrain.isTank()) {
       double rightYAxis = -controller.getRightY();
-      drive.drive(speed,rightYAxis);
-    }
-
-    if (controller.getXButtonPressed()) {
-      if(tank) {
-        tank = false;
-      }
-      if(!tank) {
-        tank = true;
-      }
+      drivetrain.drive(speed,rightYAxis);
     }
   }
 
