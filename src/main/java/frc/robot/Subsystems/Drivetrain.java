@@ -10,8 +10,8 @@ import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
 import org.carlmontrobotics.lib199.MotorControllerFactory;
 import org.carlmontrobotics.lib199.MotorConfig;
 public class Drivetrain {
-CANSparkMax leftMotors = MotorControllerFactory.createSparkMax(1,MotorConfig.NEO_550);
-CANSparkMax rightMotors = MotorControllerFactory.createSparkMax(2,MotorConfig.NEO_550);
+CANSparkMax leftMotors = MotorControllerFactory.createSparkMax(1,MotorConfig.NEO);
+CANSparkMax rightMotors = MotorControllerFactory.createSparkMax(2,MotorConfig.NEO);
 public boolean isTank = false;
 
 public void driveForward(double y1,double y2) {
