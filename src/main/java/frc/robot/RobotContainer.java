@@ -28,8 +28,10 @@ public class RobotContainer {
   private void configureBindings() {
       new JoystickButton(driverController, Constants.SWITCH_BUTTON).onTrue(new InstantCommand(()->{drivetrain.swap();}));
       new JoystickButton(driverController, Constants.OUT_TAKE).onTrue(new InstantCommand(()->{flywheel.out_take(1);}));
-      new JoystickButton(driverController, Constants.OUT_TAKE).onFalse(new InstantCommand(() -> {flywheel.out_take(-1);}));
-  }
+      new JoystickButton(driverController, Constants.OUT_TAKE).onFalse(new InstantCommand(() -> {flywheel.out_take(0);}));
+      new JoystickButton(driverController, Constants.INTAKE).onTrue(new InstantCommand(()->{flywheel.intake(1);}));
+      new JoystickButton(driverController, Constants.INTAKE).onFalse(new InstantCommand(() -> {flywheel.out_take(0);}));
+    }
 
   public Command getAutonomousCommand() {
     return Commands.print("No autonomous command configured");
