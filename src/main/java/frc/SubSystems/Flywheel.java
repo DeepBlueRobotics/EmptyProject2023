@@ -11,7 +11,8 @@ public class Flywheel {
     public void intake() {
         
     }
-    public void out_take() {
-
+    public void out_take(int speed) {
+        flyWheel1.set(speed);
+        flyWheel2.set(-speed);
     }
 }

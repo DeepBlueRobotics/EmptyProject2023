@@ -3,7 +3,9 @@
 // the WPILib BSD license file in the root directory of this project.
 
 package frc.robot;
+import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.XboxController.Button;
+
 /**
  * The Constants class provides a convenient place for teams to hold robot-wide numerical or boolean
  * constants. This class should not be used for any other purpose. All constants should be declared
@@ -13,6 +15,8 @@ import edu.wpi.first.wpilibj.XboxController.Button;
  * constants are needed, to reduce verbosity.
  */
 public final class Constants {
+    static XboxController controller = new XboxController(0);
     public static final int SWITCH_BUTTON = Button.kX.value;
-    // TODO: add button x as a constant and name it its function
+    public static final int OUT_TAKE =  Button.kRightBumper.value;
+
 }
