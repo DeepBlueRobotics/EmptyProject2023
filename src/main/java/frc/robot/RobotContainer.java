@@ -5,22 +5,20 @@
 package frc.robot;
 
 import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
-import frc.SubSystems.Drivetrain;
-import frc.SubSystems.Flywheel;
-import frc.robot.Constants;
 
-import java.sql.Driver;
+import frc.robot.commands.Autonomous;
+import frc.robot.subsystems.Drivetrain;
+import frc.robot.subsystems.Flywheel;
+
 import edu.wpi.first.wpilibj.XboxController;
-import edu.wpi.first.wpilibj.XboxController.Button;
-import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 
 public class RobotContainer {
-  public final GenericHID driverController = new GenericHID(0);
-  public Drivetrain drivetrain = new Drivetrain();
+  public final XboxController driverController = new XboxController(0);
   public Flywheel flywheel = new Flywheel();
+  public XboxController controller = new XboxController(0);
+  private Drivetrain drivetrain = new Drivetrain(controller);
   public RobotContainer() {
     configureBindings();
   }
@@ -29,11 +27,12 @@ public class RobotContainer {
       new JoystickButton(driverController, Constants.SWITCH_BUTTON).onTrue(new InstantCommand(()->{drivetrain.swap();}));
       new JoystickButton(driverController, Constants.OUT_TAKE).onTrue(new InstantCommand(()->{flywheel.out_take(1);}));
       new JoystickButton(driverController, Constants.OUT_TAKE).onFalse(new InstantCommand(() -> {flywheel.out_take(0);}));
-      new JoystickButton(driverController, Constants.INTAKE).onTrue(new InstantCommand(()->{flywheel.intake(1);}));
-      new JoystickButton(driverController, Constants.INTAKE).onFalse(new InstantCommand(() -> {flywheel.out_take(0);}));
+      new JoystickButton(driverController, Constants.IN_TAKE).onTrue(new InstantCommand(()->{flywheel.intake(1);}));
+      new JoystickButton(driverController, Constants.IN_TAKE).onFalse(new InstantCommand(() -> {flywheel.out_take(0);}));
     }
 
   public Command getAutonomousCommand() {
-    return Commands.print("No autonomous command configured");
+    return new Autonomous(drivetrain);
+    //return Commands.print("No autonomous command configured");
   }
 }

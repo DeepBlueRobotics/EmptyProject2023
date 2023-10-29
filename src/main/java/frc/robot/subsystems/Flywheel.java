@@ -1,11 +1,13 @@
-package frc.SubSystems;
+package frc.robot.subsystems;
 
 import org.carlmontrobotics.lib199.MotorConfig;
 import org.carlmontrobotics.lib199.MotorControllerFactory;
 
 import com.revrobotics.CANSparkMax;
 
-public class Flywheel {
+import edu.wpi.first.wpilibj2.command.SubsystemBase;
+
+public class Flywheel extends SubsystemBase{
     CANSparkMax flyWheel1 = MotorControllerFactory.createSparkMax(3,MotorConfig.NEO);
     CANSparkMax flyWheel2 = MotorControllerFactory.createSparkMax(3, MotorConfig.NEO);
     public void intake(double speed) {

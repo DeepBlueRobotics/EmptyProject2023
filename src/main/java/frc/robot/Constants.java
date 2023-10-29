@@ -16,7 +16,8 @@ import edu.wpi.first.wpilibj.XboxController.Button;
  */
 public final class Constants {
     static XboxController controller = new XboxController(0);
+    
     public static final int SWITCH_BUTTON = Button.kX.value;
     public static final int OUT_TAKE =  Button.kRightBumper.value;
-    public static final int INTAKE =  Button.kLeftBumper.value;
+    public static final int IN_TAKE =  Button.kLeftBumper.value;
 }
