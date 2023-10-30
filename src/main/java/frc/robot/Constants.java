@@ -3,7 +3,6 @@
 // the WPILib BSD license file in the root directory of this project.
 
 package frc.robot;
-import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.XboxController.Button;
 
 /**
@@ -15,8 +14,6 @@ import edu.wpi.first.wpilibj.XboxController.Button;
  * constants are needed, to reduce verbosity.
  */
 public final class Constants {
-    static XboxController controller = new XboxController(0);
-    
     public static final int SWITCH_BUTTON = Button.kX.value;
     public static final int OUT_TAKE =  Button.kRightBumper.value;
     public static final int IN_TAKE =  Button.kLeftBumper.value;

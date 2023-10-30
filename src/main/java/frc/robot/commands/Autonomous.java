@@ -19,6 +19,7 @@ public class Autonomous extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
+    timer.reset();
     timer.start();
     drivetrain.drive(0.5,0.5);
   }
@@ -30,6 +31,8 @@ public class Autonomous extends CommandBase {
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
+    timer.stop();
+    timer.restart();
     drivetrain.drive(0, 0);
   }
 
