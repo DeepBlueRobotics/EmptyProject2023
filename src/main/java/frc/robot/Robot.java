@@ -5,22 +5,17 @@
 package frc.robot;
 
 import edu.wpi.first.wpilibj.TimedRobot;
-import edu.wpi.first.wpilibj.Timer;
+
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
-import frc.robot.Subsystems.Drivetrain;
-import edu.wpi.first.wpilibj.XboxController;
-import edu.wpi.first.wpilibj.drive.*;
-import frc.robot.Subsystems.Drivetrain;
-import edu.wpi.first.wpilibj.XboxController;
 
 public class Robot extends TimedRobot {
   
   private Command m_autonomousCommand;
   private RobotContainer m_robotContainer;
-  private Drivetrain drivetrain = new Drivetrain();
-  private XboxController controller = new XboxController(0);
-  Timer timer = new Timer();
+
+ 
+  
   @Override
   public void robotInit() {
     m_robotContainer = new RobotContainer();
@@ -43,8 +38,8 @@ public class Robot extends TimedRobot {
   @Override
   public void autonomousInit() {
     m_autonomousCommand = m_robotContainer.getAutonomousCommand();
-    timer.start();
-    drivetrain.driveForward(0.5, 0.5);
+    
+    
     if (m_autonomousCommand != null) {
       m_autonomousCommand.schedule();
     }
@@ -52,9 +47,7 @@ public class Robot extends TimedRobot {
 
   @Override
   public void autonomousPeriodic() {
-    if(timer.get() >2) {
-      drivetrain.driveForward(0, 0);
-    }
+    
   }
 
   @Override
@@ -71,22 +64,7 @@ public class Robot extends TimedRobot {
   @Override
   public void teleopPeriodic() {
     
-    double speed = -(controller.getRawAxis(1));
-    double turn = (controller.getRawAxis(4));
-    if(controller.getXButtonPressed()) {
-      drivetrain.swap();
-    }
-
-    double left = speed-turn;
-    double right = speed+turn;
-
     
-
-    if(!drivetrain.isTank) {
-    drivetrain.driveForward(left,right);
-    } else {
-      drivetrain.driveForward(speed, -(controller.getRawAxis(5)));
-    }
   }
 
   @Override
