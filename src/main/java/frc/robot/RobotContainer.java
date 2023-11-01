@@ -14,7 +14,6 @@ import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 
 public class RobotContainer {
-  public final XboxController driverController = new XboxController(0);
   public Flywheel flywheel = new Flywheel();
   public XboxController controller = new XboxController(0);
   private Drivetrain drivetrain = new Drivetrain(controller);
