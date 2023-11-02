@@ -3,15 +3,13 @@
 // the WPILib BSD license file in the root directory of this project.
 
 package frc.robot.commands;
-
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.Drivetrain;
 public class Autonomous extends CommandBase {
   /** Creates a new Autonomous. */
   private Drivetrain drivetrain;
-  public static boolean auto;
-  Timer timer = new Timer();
+  private final Timer timer = new Timer();
   public Autonomous(Drivetrain dtrain) {
     this.drivetrain = dtrain;
     addRequirements(drivetrain);
@@ -21,9 +19,9 @@ public class Autonomous extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
+    drivetrain.isAuto = true;
     timer.start();
     drivetrain.drive(0.5,0.5);
-    auto = true;
   }
 
   // Called every time the scheduler runs while the command is scheduled.
@@ -34,7 +32,7 @@ public class Autonomous extends CommandBase {
   @Override
   public void end(boolean interrupted) {
     timer.stop();
-    auto = false;
+    drivetrain.isAuto = false;
     drivetrain.drive(0, 0);
   }
   

@@ -6,7 +6,6 @@ package frc.robot;
 
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
-
 import frc.robot.commands.Autonomous;
 import frc.robot.subsystems.Drivetrain;
 import frc.robot.subsystems.Flywheel;
@@ -31,6 +30,5 @@ public class RobotContainer {
 
   public Command getAutonomousCommand() {
     return new Autonomous(drivetrain);
-    //return Commands.print("No autonomous command configured");
   }
 }
