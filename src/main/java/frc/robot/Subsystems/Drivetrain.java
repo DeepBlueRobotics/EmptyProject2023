@@ -1,5 +1,6 @@
 package frc.robot.Subsystems;
 import com.revrobotics.CANSparkMax;
+import com.revrobotics.RelativeEncoder;
 
 import edu.wpi.first.wpilibj.*;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
@@ -12,7 +13,8 @@ import org.carlmontrobotics.lib199.MotorConfig;
 public class Drivetrain extends SubsystemBase {
 CANSparkMax leftMotors = MotorControllerFactory.createSparkMax(1,MotorConfig.NEO);
 CANSparkMax rightMotors = MotorControllerFactory.createSparkMax(2,MotorConfig.NEO);
-
+public RelativeEncoder leftEncoder = leftMotors.getEncoder();
+public RelativeEncoder rightEncoder = rightMotors.getEncoder();
 public boolean isTank = false;
 public boolean isAuto = false;
 private XboxController controller;
