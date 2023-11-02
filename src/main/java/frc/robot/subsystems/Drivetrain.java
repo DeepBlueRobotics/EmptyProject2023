@@ -2,12 +2,13 @@ package frc.robot.subsystems;
 import org.carlmontrobotics.lib199.MotorControllerFactory;
 import org.carlmontrobotics.lib199.MotorConfig;
 import com.revrobotics.CANSparkMax;
-
+import frc.robot.commands.Autonomous;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 
 public class Drivetrain extends SubsystemBase {
+    boolean auto = Autonomous.auto;
     public boolean isTank = false;
     private XboxController controller;
     CANSparkMax rightMotor = MotorControllerFactory.createSparkMax(1,MotorConfig.NEO);
@@ -28,15 +29,18 @@ public class Drivetrain extends SubsystemBase {
     
     @Override
     public void periodic(){
-      double speed = -controller.getLeftY();
-      if (isTank) {
-        double turn = controller.getLeftX();
-        double left = speed - turn;
-        double right = speed + turn;
-        drive(left, right);
-      } else {
-        double rightYAxis = -controller.getRightY();
-        drive(speed,rightYAxis);
+      if (!auto) {
+        double speed = -controller.getLeftY();
+        if (isTank) {
+          double turn = controller.getLeftX();
+          double left = speed - turn;
+          double right = speed + turn;
+          drive(left, right);
+        } else {
+          double rightYAxis = -controller.getRightY();
+          drive(speed,rightYAxis);
+        }
       }
+      
     }
 }

@@ -10,6 +10,7 @@ import frc.robot.subsystems.Drivetrain;
 public class Autonomous extends CommandBase {
   /** Creates a new Autonomous. */
   private Drivetrain drivetrain;
+  public static boolean auto;
   Timer timer = new Timer();
   public Autonomous(Drivetrain dtrain) {
     addRequirements(drivetrain = dtrain);
@@ -19,9 +20,9 @@ public class Autonomous extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    timer.reset();
     timer.start();
     drivetrain.drive(0.5,0.5);
+    auto = true;
   }
 
   // Called every time the scheduler runs while the command is scheduled.
@@ -32,10 +33,10 @@ public class Autonomous extends CommandBase {
   @Override
   public void end(boolean interrupted) {
     timer.stop();
-    timer.restart();
+    auto = false;
     drivetrain.drive(0, 0);
   }
-
+  
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
