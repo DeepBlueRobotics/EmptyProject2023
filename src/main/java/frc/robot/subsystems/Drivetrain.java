@@ -41,6 +41,5 @@ public class Drivetrain extends SubsystemBase {
           drive(speed,rightYAxis);
         }
       }
-      
     }
 }

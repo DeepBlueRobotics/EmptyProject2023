@@ -13,7 +13,8 @@ public class Autonomous extends CommandBase {
   public static boolean auto;
   Timer timer = new Timer();
   public Autonomous(Drivetrain dtrain) {
-    addRequirements(drivetrain = dtrain);
+    this.drivetrain = dtrain;
+    addRequirements(drivetrain);
     // Use addRequirements() here to declare subsystem dependencies.
   }
 
