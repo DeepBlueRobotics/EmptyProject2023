@@ -5,21 +5,27 @@ import org.carlmontrobotics.lib199.MotorControllerFactory;
 
 import com.revrobotics.CANSparkMax;
 
+import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class Shooter extends SubsystemBase {
-    CANSparkMax leftShooter = MotorControllerFactory.createSparkMax(7,MotorConfig.NEO_550);
-    CANSparkMax rightShooter = MotorControllerFactory.createSparkMax(10,MotorConfig.NEO_550);
+    CANSparkMax leftShooter1 = MotorControllerFactory.createSparkMax(7,MotorConfig.NEO_550);
+    CANSparkMax rightShooter1 = MotorControllerFactory.createSparkMax(10,MotorConfig.NEO_550);
+    CANSparkMax leftShooter2 = MotorControllerFactory.createSparkMax(7,MotorConfig.NEO_550);
+    CANSparkMax rightShooter2 = MotorControllerFactory.createSparkMax(10,MotorConfig.NEO_550);
+    MotorControllerGroup firstSet = new MotorControllerGroup(leftShooter1,rightShooter1);
+    MotorControllerGroup secondSet = new MotorControllerGroup(leftShooter2,rightShooter2);
+
     public void shoot() {
-        leftShooter.set(1);
-        rightShooter.set(1);
+        firstSet.set(1);
+        secondSet.set(1);
     }
     public void inTake() {
-        leftShooter.set(-1);
-        rightShooter.set(-1);
+        firstSet.set(0.7);
+        secondSet.set(0.4);
     }
     public void stop() {
-        leftShooter.set(0);
-        rightShooter.set(0);
+        firstSet.set(0);
+        secondSet.set(0);
     }
 }
