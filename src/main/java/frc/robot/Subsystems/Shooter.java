@@ -9,7 +9,7 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class Shooter extends SubsystemBase {
     CANSparkMax leftShooter = MotorControllerFactory.createSparkMax(7,MotorConfig.NEO_550);
-    CANSparkMax rightShooter = MotorControllerFactory.createSparkMax(9,MotorConfig.NEO_550);
+    CANSparkMax rightShooter = MotorControllerFactory.createSparkMax(10,MotorConfig.NEO_550);
     public void shoot() {
         leftShooter.set(1);
         rightShooter.set(1);

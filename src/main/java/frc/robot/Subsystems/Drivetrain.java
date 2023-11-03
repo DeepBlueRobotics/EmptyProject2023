@@ -12,7 +12,7 @@ import org.carlmontrobotics.lib199.MotorConfig;
 
 public class Drivetrain extends SubsystemBase {
 CANSparkMax leftMotors = MotorControllerFactory.createSparkMax(1,MotorConfig.NEO);
-CANSparkMax rightMotors = MotorControllerFactory.createSparkMax(2,MotorConfig.NEO);
+CANSparkMax rightMotors = MotorControllerFactory.createSparkMax(9,MotorConfig.NEO);
 public RelativeEncoder leftEncoder = leftMotors.getEncoder();
 public RelativeEncoder rightEncoder = rightMotors.getEncoder();
 public boolean isTank = false;
