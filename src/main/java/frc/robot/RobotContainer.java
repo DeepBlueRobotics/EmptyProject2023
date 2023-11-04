@@ -28,11 +28,10 @@ public class RobotContainer {
     new JoystickButton(controller, Button.kX.value).onTrue(new InstantCommand(()->{drivetrain.swap();}));
     new JoystickButton(controller, Button.kRightBumper.value).onTrue(new InstantCommand(()->{shooter.shoot();}));
     new JoystickButton(controller, Button.kRightBumper.value).onFalse(new InstantCommand(() -> {shooter.stop();}));
-    new JoystickButton(controller, Button.kLeftBumper.value).onTrue(new InstantCommand(()->{shooter.inTake();}));
     new JoystickButton(controller, Button.kLeftBumper.value).onFalse(new InstantCommand(() -> {shooter.stop();}));
   }
 
   public Command getAutonomousCommand() {
-    return new Autodrive(drivetrain);
+    return new Autodrive(drivetrain, shooter);
   }
 }

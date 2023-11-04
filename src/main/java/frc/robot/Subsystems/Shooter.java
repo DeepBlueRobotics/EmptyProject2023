@@ -15,17 +15,21 @@ public class Shooter extends SubsystemBase {
     CANSparkMax rightShooter2 = MotorControllerFactory.createSparkMax(3,MotorConfig.NEO_550);
     MotorControllerGroup firstSet = new MotorControllerGroup(leftShooter1,rightShooter1);
     MotorControllerGroup secondSet = new MotorControllerGroup(leftShooter2,rightShooter2);
+    public boolean canIntake;
 
     public void shoot() {
         firstSet.set(1);
         secondSet.set(1);
     }
-    public void inTake() {
-        firstSet.set(0.7);
-        secondSet.set(0.4);
-    }
     public void stop() {
         firstSet.set(0);
         secondSet.set(0);
+    }
+    @Override
+    public void periodic() {
+        if (canIntake) {
+            firstSet.set(-1);
+            secondSet.set(-1);
+        }
     }
 }
