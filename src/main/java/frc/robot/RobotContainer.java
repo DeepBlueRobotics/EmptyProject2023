@@ -9,15 +9,14 @@ import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.Subsystems.Drivetrain;
-import frc.robot.Subsystems.Shooter;
+import frc.robot.Subsystems.Intake;
 import frc.robot.commands.Autodrive;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.XboxController.Button;
 
 public class RobotContainer {
-  
-  private final Shooter shooter = new Shooter();
-  private final XboxController controller = new XboxController(0);
+  private final Intake shooter = new Intake();
+  private final XboxController controller = new XboxController(Constants.OI.CONTROLLER_PORT);
   private Drivetrain drivetrain = new Drivetrain(controller);
   
   public RobotContainer() {
@@ -25,10 +24,9 @@ public class RobotContainer {
   }
 
   private void configureBindings() {
-    new JoystickButton(controller, Button.kX.value).onTrue(new InstantCommand(()->{drivetrain.swap();}));
-    new JoystickButton(controller, Button.kRightBumper.value).onTrue(new InstantCommand(()->{shooter.shoot();}));
-    new JoystickButton(controller, Button.kRightBumper.value).onFalse(new InstantCommand(() -> {shooter.stop();}));
-    new JoystickButton(controller, Button.kLeftBumper.value).onFalse(new InstantCommand(() -> {shooter.stop();}));
+    new JoystickButton(controller, Button.kX.value).onTrue(new InstantCommand(drivetrain::swap));
+    new JoystickButton(controller, Button.kRightBumper.value).onTrue(new InstantCommand(shooter::shoot));
+    new JoystickButton(controller, Button.kRightBumper.value).onFalse(new InstantCommand(shooter::stop));
   }
 
   public Command getAutonomousCommand() {
