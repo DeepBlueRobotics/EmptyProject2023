@@ -1,6 +1,11 @@
 {
   "HALProvider": {
     "Other Devices": {
+      "SparkMax[10]": {
+        "header": {
+          "open": true
+        }
+      },
       "SparkMax[1]": {
         "header": {
           "open": true
