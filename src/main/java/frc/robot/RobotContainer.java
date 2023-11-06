@@ -19,6 +19,7 @@ public class RobotContainer {
   private final XboxController controller = new XboxController(Constants.OI.CONTROLLER_PORT);
   private Drivetrain drivetrain = new Drivetrain(controller);
   
+  
   public RobotContainer() {
     configureBindings();
   }
@@ -26,7 +27,8 @@ public class RobotContainer {
   private void configureBindings() {
     new JoystickButton(controller, Button.kX.value).onTrue(new InstantCommand(drivetrain::swap));
     new JoystickButton(controller, Button.kRightBumper.value).onTrue(new InstantCommand(shooter::shoot));
-    new JoystickButton(controller, Button.kRightBumper.value).onFalse(new InstantCommand(shooter::stop));
+    new JoystickButton(controller, Button.kRightBumper.value).onFalse(new InstantCommand(shooter::outtakeEnded));
+    new JoystickButton(controller, Button.kLeftBumper.value).onTrue(new InstantCommand(drivetrain::speedSwap));
   }
 
   public Command getAutonomousCommand() {

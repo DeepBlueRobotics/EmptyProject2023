@@ -19,6 +19,7 @@ private RelativeEncoder leftEncoder = leftMotors.getEncoder();
 private RelativeEncoder rightEncoder = rightMotors.getEncoder();
 private boolean isAuto = Autodrive.isAuto(false);
 private boolean isTank = Autodrive.isTank(false);
+private boolean isSlow = true;
 private XboxController controller;
 
 
@@ -36,6 +37,10 @@ public void swap () {
     isTank = !isTank;
 }
 
+public void speedSwap () {
+    isSlow = !isSlow;
+}
+
 @Override
 public void periodic() {
     if(isAuto) {
@@ -47,9 +52,18 @@ public void periodic() {
     double right = speed-turn;
 
     if(!isTank) {
-        motorSpeeds(left,right);
+        if(isSlow) {
+            motorSpeeds(left * 0.6,right * 0.6);
+        } else {
+            motorSpeeds(left,right);
+        }
+        
     } else if(isTank) {
-        motorSpeeds(speed, -(controller.getRightY()));
+        if (isSlow) {
+            motorSpeeds(speed * 0.6, -(controller.getRightY() * 0.6));
+        } else {
+            motorSpeeds(speed, -(controller.getRightY()));
+        }
     }
 
     }
