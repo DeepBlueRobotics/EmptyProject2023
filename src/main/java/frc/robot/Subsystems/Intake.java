@@ -28,33 +28,40 @@ public class Intake extends SubsystemBase {
     RelativeEncoder rightEncoder1 = frontRightFlyWheel.getEncoder();
     private double savedIntakeVelocity;
     private double outtakeMaxVelocity; // ASSIGN THIS TO THE MAXIMUM VELOCITY
+    //Conditional booleans
     private boolean firstTime = true;
     private boolean checkOuttakeReachedSpeed = false;
     private boolean checkIntakeSpeedDecrease = false;
     private boolean checkIntakeSpeedIncreased = false;
-    private final Timer timer = new Timer();
+    //Timers
+    private final Timer startingTimer = new Timer();
+    private final Timer delayTimer = new Timer();
+    private final Timer failSafeTimer = new Timer();
+    public void failSafeShoot() { // Runs when ball is held for over 3.8 seconds
+        frontFlywheels.set(1);
+        backFlywheels.set(1);
+        Timer.delay(0.4);
+        outtakeEnded();
+    }
 
-    
-
-    public void shoot() {
+    public void shoot() { // Runs when right bumper is held down
         frontFlywheels.set(1);
         checkOuttakeReachedSpeed = true;
     }
-    public void stop() {
+    public void stop() { // stops flyhweel motors
         frontFlywheels.set(0);
         backFlywheels.set(0);
     }
     
-    public void outtakeEnded() {
+    public void outtakeEnded() { // Runs when right bumper is released
         checkOuttakeReachedSpeed = false;
         frontFlywheels.set(-0.1);
         backFlywheels.set(-0.1);
-        Timer.delay(0.5);
-        checkIntakeSpeedDecrease = true;
+        delayTimer.start();
     }
 
-    public void initialize() {
-        timer.start();
+    public void initialize() { // Gets the intake automatically moving at the start
+        startingTimer.start();
         frontFlywheels.set(-0.1);
         backFlywheels.set(-0.1);
     }
@@ -69,22 +76,36 @@ public class Intake extends SubsystemBase {
             }
         }
         
-        if(timer.get() >= 0.5 && firstTime) {
+        if(startingTimer.get() >= 0.5 && firstTime) { // Saves the normal intake velocity at the start
             savedIntakeVelocity = leftEncoder1.getVelocity();
             firstTime = true;
             checkIntakeSpeedDecrease = true;
-            timer.reset();
+            startingTimer.stop();
+            startingTimer.reset();
         }
 
-        if(leftEncoder1.getVelocity() < savedIntakeVelocity && checkIntakeSpeedDecrease) { // Checks if ball is in
+        if(leftEncoder1.getVelocity() < savedIntakeVelocity && checkIntakeSpeedDecrease) { // Checks if inttake speed decrease
             checkIntakeSpeedIncreased = true;
             checkIntakeSpeedDecrease = false;
            }
         
-        if(leftEncoder1.getVelocity() >= savedIntakeVelocity && checkIntakeSpeedIncreased) {
+        if(leftEncoder1.getVelocity() >= savedIntakeVelocity && checkIntakeSpeedIncreased) { // checks if inttake speed is restored to normal
             stop();
+            failSafeTimer.start();
             checkIntakeSpeedIncreased = false;
-        }   
+        }  
+
+        if(failSafeTimer.get() > 3.8) { //If ball is held for too long it is shot out to avoid penalty
+            failSafeShoot();
+            failSafeTimer.stop();
+            failSafeTimer.reset();
+        }
+
+        if(delayTimer.get() > 0.5) { // Delay timer to give intake motors time to speed up after outtaking
+            checkIntakeSpeedDecrease = true;
+            delayTimer.stop();
+            delayTimer.reset();
+        }
         SmartDashboard.putNumber("left Encoder Velocity", savedIntakeVelocity);
         SmartDashboard.getBoolean("First time", firstTime);
     }
