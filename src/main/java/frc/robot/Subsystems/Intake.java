@@ -58,6 +58,8 @@ public class Intake extends SubsystemBase {
         frontFlywheels.set(-0.1);
         backFlywheels.set(-0.1);
         delayTimer.start();
+        failSafeTimer.stop();
+        failSafeTimer.reset();
     }
 
     public void initialize() { // Gets the intake automatically moving at the start
@@ -70,7 +72,7 @@ public class Intake extends SubsystemBase {
     public void periodic() {
         
         
-        if(checkOuttakeReachedSpeed) { // Checks if front wheels are at max speed
+        if(checkOuttakeReachedSpeed) { // Checks if front wheels are at max speed for outtake
             if (leftEncoder1.getVelocity() >= outtakeMaxVelocity - 0.05) { // the 0.05 is to make sure it checks because the battery level might decrease speed of mottors
                 backFlywheels.set(0.5);
             }
@@ -78,7 +80,7 @@ public class Intake extends SubsystemBase {
         
         if(startingTimer.get() >= 0.5 && firstTime) { // Saves the normal intake velocity at the start
             savedIntakeVelocity = leftEncoder1.getVelocity();
-            firstTime = true;
+            firstTime = false;
             checkIntakeSpeedDecrease = true;
             startingTimer.stop();
             startingTimer.reset();
@@ -91,7 +93,7 @@ public class Intake extends SubsystemBase {
         
         if(leftEncoder1.getVelocity() >= savedIntakeVelocity && checkIntakeSpeedIncreased) { // checks if inttake speed is restored to normal
             stop();
-            failSafeTimer.start();
+            failSafeTimer.start(); // Since the ball is inside fail safe starts counting
             checkIntakeSpeedIncreased = false;
         }  
 
