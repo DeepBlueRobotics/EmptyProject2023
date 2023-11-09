@@ -27,7 +27,7 @@ public class Intake extends SubsystemBase {
     RelativeEncoder leftEncoder1 = frontLeftFlyWheel.getEncoder();
     RelativeEncoder rightEncoder1 = frontRightFlyWheel.getEncoder();
     private double savedIntakeVelocity;
-    private double outtakeMaxVelocity; // ASSIGN THIS TO THE MAXIMUM VELOCITY
+    
     //Conditional booleans
     private boolean firstTime = true;
     private boolean checkOuttakeReachedSpeed = false;
@@ -37,6 +37,7 @@ public class Intake extends SubsystemBase {
     private final Timer startingTimer = new Timer();
     private final Timer delayTimer = new Timer();
     private final Timer failSafeTimer = new Timer();
+    
     public void failSafeShoot() { // Runs when ball is held for over 3.8 seconds
         frontFlywheels.set(1);
         backFlywheels.set(1);
@@ -67,23 +68,26 @@ public class Intake extends SubsystemBase {
         frontFlywheels.set(-0.1);
         backFlywheels.set(-0.1);
     }
+    public void savedVelocity() {
+        savedIntakeVelocity = leftEncoder1.getVelocity();
+        firstTime = false;
+        checkIntakeSpeedDecrease = true;
+        startingTimer.stop();
+        startingTimer.reset();
+    }
 
     @Override
     public void periodic() {
         
         
         if(checkOuttakeReachedSpeed) { // Checks if front wheels are at max speed for outtake
-            if (leftEncoder1.getVelocity() >= outtakeMaxVelocity - 0.05) { // the 0.05 is to make sure it checks because the battery level might decrease speed of mottors
+            if (leftEncoder1.getVelocity() >= Constants.Intake.MAX_VELOCITY - 0.05) { // the 0.05 is to make sure it checks because the battery level might decrease speed of mottors
                 backFlywheels.set(0.5);
             }
         }
         
         if(startingTimer.get() >= 0.5 && firstTime) { // Saves the normal intake velocity at the start
-            savedIntakeVelocity = leftEncoder1.getVelocity();
-            firstTime = false;
-            checkIntakeSpeedDecrease = true;
-            startingTimer.stop();
-            startingTimer.reset();
+            this.savedVelocity();
         }
 
         if(leftEncoder1.getVelocity() < savedIntakeVelocity && checkIntakeSpeedDecrease) { // Checks if inttake speed decrease
