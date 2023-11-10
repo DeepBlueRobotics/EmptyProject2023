@@ -10,24 +10,26 @@ import edu.wpi.first.wpilibj.Timer;
 public class Autodrive extends CommandBase {
     private final Drivetrain drivetrain;
     private final Timer timer = new Timer();
-    public Autodrive(Drivetrain drivetrain, Intake shooter) {
+    private static boolean isAuto1 = true;
+    private static boolean isTank1 = true;
+    public Autodrive(Drivetrain drivetrain) {
         this.drivetrain = drivetrain;
-        addRequirements(drivetrain, shooter);
+        addRequirements(drivetrain);
     }
     
-    public static boolean isTank(boolean tank) {
-        return tank;
+    public static boolean isTank() {
+        return isTank1;
     }
 
-    public static boolean isAuto(boolean auto) {
-        return auto;
+    public static boolean isAuto() {
+        return isAuto1;
     }
 
     @Override
     public void initialize() {
         timer.reset();
-        isTank(true);
-        isAuto(true);
+        isTank();
+        isAuto();
         timer.start();
         drivetrain.motorSpeeds(Constants.Drivetrain.AUTO_SPEED, Constants.Drivetrain.AUTO_SPEED);
     }
@@ -39,8 +41,8 @@ public class Autodrive extends CommandBase {
     @Override
     public void end(boolean interrupted) {
         drivetrain.motorSpeeds(0, 0); // Stops motors by setting voltage to 0
-        isTank(false);
-        isAuto(false);
+        isTank1=false;
+        isAuto1=false;
     }
     @Override
     public boolean isFinished() {

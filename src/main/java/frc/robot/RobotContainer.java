@@ -36,6 +36,6 @@ public class RobotContainer {
   }
 
   public Command getAutonomousCommand() {
-    return new Autodrive(drivetrain, shooter);
+    return new Autodrive(drivetrain);
   }
 }

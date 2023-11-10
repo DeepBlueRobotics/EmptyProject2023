@@ -18,9 +18,7 @@ public class IntakeStart extends CommandBase {
     }
     @Override 
     public void initialize() {
-        startingTimer.reset();
         frontGroup.set(-0.1);
         backGroup.set(-0.1);
-        startingTimer.start();
     }
 }
