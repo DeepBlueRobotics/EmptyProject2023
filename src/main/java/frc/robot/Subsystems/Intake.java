@@ -63,7 +63,7 @@ public class Intake extends SubsystemBase {
         failSafeTimer.stop();
         failSafeTimer.reset();
     }
-
+     
     public void initialize() { // Gets the intake automatically moving at the start
         startingTimer.start();
         frontFlywheels.set(-0.1);
@@ -116,3 +116,4 @@ public class Intake extends SubsystemBase {
         SmartDashboard.getBoolean("First time", firstTime);
     }
 }
+
