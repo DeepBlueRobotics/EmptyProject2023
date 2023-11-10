@@ -11,6 +11,7 @@ import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.Subsystems.Drivetrain;
 import frc.robot.Subsystems.Intake;
 import frc.robot.commands.Autodrive;
+import frc.robot.commands.IntakeStart;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.XboxController.Button;
 
@@ -29,6 +30,9 @@ public class RobotContainer {
     new JoystickButton(controller, Button.kRightBumper.value).onTrue(new InstantCommand(shooter::shoot));
     new JoystickButton(controller, Button.kRightBumper.value).onFalse(new InstantCommand(shooter::outtakeEnded));
     new JoystickButton(controller, Button.kLeftBumper.value).onTrue(new InstantCommand(drivetrain::speedSwap));
+  }
+  public Command startIntake() {
+    return new IntakeStart(shooter, shooter.frontFlywheels, shooter.backFlywheels);
   }
 
   public Command getAutonomousCommand() {
