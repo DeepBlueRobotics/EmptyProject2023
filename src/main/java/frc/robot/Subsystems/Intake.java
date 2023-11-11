@@ -81,7 +81,8 @@ public class Intake extends SubsystemBase {
     @Override
     public void periodic() {
         SmartDashboard.putNumber("left Encoder Velocity", leftEncoder1.getVelocity());
-        if(limitSwitch.get() && !holding) {
+        
+        if(!limitSwitch.get() && !holding) {
             stop();
             failSafeTimer.start();
             holding = true;
@@ -89,6 +90,7 @@ public class Intake extends SubsystemBase {
         if(holding && failSafeTimer.get()>3.8) {
             failSafeShoot();
         }
+        
     }
 }
 
