@@ -32,7 +32,7 @@ public class RobotContainer {
     new JoystickButton(controller, Button.kLeftBumper.value).onTrue(new InstantCommand(drivetrain::speedSwap));
   }
   public Command startIntake() {
-    return new IntakeStart(shooter, shooter.frontFlywheels, shooter.backFlywheels);
+    return new IntakeStart(shooter, shooter.frontFlywheels(), shooter.backFlywheels());
   }
 
   public Command getAutonomousCommand() {

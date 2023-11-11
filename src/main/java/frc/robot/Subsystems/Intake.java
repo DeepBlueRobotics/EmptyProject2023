@@ -24,8 +24,8 @@ public class Intake extends SubsystemBase {
     private CANSparkMax frontRightFlyWheel = MotorControllerFactory.createSparkMax(Constants.Intake.FRONT_RIGHT_FLYWHEEL_PORT,MotorConfig.NEO);
     private CANSparkMax backLeftFlyWheel = MotorControllerFactory.createSparkMax(Constants.Intake.BACK_LEFT_FLYWHEEL_PORT,MotorConfig.NEO);
     private CANSparkMax backRightFlyWheel = MotorControllerFactory.createSparkMax(Constants.Intake.BACK_RIGHT_FLYWHEEL_PORT,MotorConfig.NEO);
-    public MotorControllerGroup frontFlywheels = new MotorControllerGroup(frontLeftFlyWheel,frontRightFlyWheel);
-    public MotorControllerGroup backFlywheels = new MotorControllerGroup(backLeftFlyWheel,backRightFlyWheel);
+    private MotorControllerGroup frontFlywheels = new MotorControllerGroup(frontLeftFlyWheel,frontRightFlyWheel);
+    private MotorControllerGroup backFlywheels = new MotorControllerGroup(backLeftFlyWheel,backRightFlyWheel);
     RelativeEncoder leftEncoder1 = frontLeftFlyWheel.getEncoder();
     RelativeEncoder rightEncoder1 = frontRightFlyWheel.getEncoder();
     private double savedIntakeVelocity;
@@ -34,7 +34,13 @@ public class Intake extends SubsystemBase {
     private final Timer startingTimer = new Timer();
     private final Timer delayTimer = new Timer();
     private final Timer failSafeTimer = new Timer();
-    
+
+    public MotorControllerGroup frontFlywheels() {
+        return frontFlywheels;
+    }
+    public MotorControllerGroup backFlywheels() {
+        return backFlywheels;
+    }
     public void failSafeShoot() { // Runs when ball is held for over 3.8 seconds
         frontFlywheels.set(1);
         backFlywheels.set(1);
