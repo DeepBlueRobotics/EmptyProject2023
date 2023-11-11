@@ -52,21 +52,15 @@ public class Intake extends SubsystemBase {
         outtakeEnded();
     }
 
-     public void checkOuttakeReachedSpeed() {
-        if (leftEncoder1.getVelocity() >= Constants.Intake.MAX_VELOCITY - 0.05) { // the 0.05 is to make sure it checks because the battery level might decrease speed of mottors
-                backFlywheels.set(0.5);
-        }
-    }
-
     public void shoot() { // Runs when right bumper is held down
         frontFlywheels.set(1);
         delayTimer.start();
         while(!shot) {
-        if(delayTimer.get() > 0.5) {
-            backFlywheels.set(1);
-            shot = true;
+            if(delayTimer.get() > 0.5) {
+                backFlywheels.set(1);
+                shot = true;
+            }
         }
-    }
         delayTimer.stop();
         delayTimer.reset();
         shot=false;
@@ -81,17 +75,13 @@ public class Intake extends SubsystemBase {
         backFlywheels.set(-0.1);
         failSafeTimer.stop();
         failSafeTimer.reset();
+        holding = false;
     }
     
-     
-   
-
-   
-
     @Override
     public void periodic() {
         SmartDashboard.putNumber("left Encoder Velocity", leftEncoder1.getVelocity());
-        if(limitSwitch.get()) {
+        if(limitSwitch.get() && !holding) {
             stop();
             failSafeTimer.start();
             holding = true;
@@ -99,8 +89,6 @@ public class Intake extends SubsystemBase {
         if(holding && failSafeTimer.get()>3.8) {
             failSafeShoot();
         }
-
-
     }
 }
 
