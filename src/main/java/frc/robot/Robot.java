@@ -53,7 +53,9 @@ public class Robot extends TimedRobot {
   }
 
   @Override
-  public void autonomousExit() {}
+  public void autonomousExit() {
+    m_intakeStartCommand = m_robotContainer.startIntake();
+  }
 
   @Override
   public void teleopInit() {
@@ -61,7 +63,7 @@ public class Robot extends TimedRobot {
     if (m_autonomousCommand != null) {
       m_autonomousCommand.cancel();
     }
-    m_intakeStartCommand = m_robotContainer.startIntake();
+    
   }
 
   @Override
