@@ -11,6 +11,7 @@ public class IntakeStart extends CommandBase {
     private final MotorControllerGroup frontGroup;
     private final MotorControllerGroup backGroup;
     Timer startingTimer = new Timer();
+    //TODO: Have intake outake rather have logic in command
     public IntakeStart(Intake intake, MotorControllerGroup frontGroup, MotorControllerGroup backGroup) {
         this.intake = intake;
         this.frontGroup = frontGroup;

@@ -15,8 +15,7 @@ public class Drivetrain extends SubsystemBase {
 
 CANSparkMax leftMotors = MotorControllerFactory.createSparkMax(Constants.Drivetrain.LEFT_MOTOR_PORT,MotorConfig.NEO);
 CANSparkMax rightMotors = MotorControllerFactory.createSparkMax(Constants.Drivetrain.RIGHT_MOTOR_PORT,MotorConfig.NEO);
-private RelativeEncoder leftEncoder = leftMotors.getEncoder();
-private RelativeEncoder rightEncoder = rightMotors.getEncoder();
+
 private boolean isAuto;
 private boolean isTank;
 private boolean isSlow = true;
@@ -45,7 +44,6 @@ public void speedSwap () {
 @Override
 public void periodic() {
     isAuto = Autodrive.isAuto();
-    
     if(isAuto) {
         return;
     }

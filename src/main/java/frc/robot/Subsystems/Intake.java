@@ -6,6 +6,7 @@ import org.carlmontrobotics.lib199.MotorConfig;
 import org.carlmontrobotics.lib199.MotorControllerFactory;
 
 import com.ctre.phoenix.motorcontrol.LimitSwitchNormal;
+import com.fasterxml.jackson.databind.module.SimpleAbstractTypeResolver;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.RelativeEncoder;
 
@@ -28,12 +29,12 @@ public class Intake extends SubsystemBase {
     private CANSparkMax backRightFlyWheel = MotorControllerFactory.createSparkMax(Constants.Intake.BACK_RIGHT_FLYWHEEL_PORT,MotorConfig.NEO);
     private MotorControllerGroup frontFlywheels = new MotorControllerGroup(frontLeftFlyWheel,frontRightFlyWheel);
     private MotorControllerGroup backFlywheels = new MotorControllerGroup(backLeftFlyWheel,backRightFlyWheel);
-    private boolean shot = false;
-    private boolean holding = false;
-    DigitalInput limitSwitch = new DigitalInput(0);
-    RelativeEncoder leftEncoder1 = frontLeftFlyWheel.getEncoder();
-    RelativeEncoder rightEncoder1 = frontRightFlyWheel.getEncoder();
-    PIDController pidController = new PIDController(Constants.Intake.KP, Constants.Intake.KI, Constants.Intake.KD);
+    private boolean didShoot = false;
+    private boolean isHolding = false;
+    private DigitalInput limitSwitch = new DigitalInput(0);
+    private RelativeEncoder leftEncoder1 = frontLeftFlyWheel.getEncoder();
+    private RelativeEncoder rightEncoder1 = frontRightFlyWheel.getEncoder();
+    
     
     
     //Timers
@@ -55,16 +56,17 @@ public class Intake extends SubsystemBase {
     public void shoot() { // Runs when right bumper is held down
         frontFlywheels.set(1);
         delayTimer.start();
-        while(!shot) {
+        while(!didShoot) {
             if(delayTimer.get() > 0.5) {
                 backFlywheels.set(1);
-                shot = true;
+                didShoot = true;
             }
         }
         delayTimer.stop();
         delayTimer.reset();
-        shot=false;
+        didShoot=false;
     }
+    
     public void stop() { // stops flyhweel motors
         frontFlywheels.set(0);
         backFlywheels.set(0);
@@ -75,19 +77,19 @@ public class Intake extends SubsystemBase {
         backFlywheels.set(-0.1);
         failSafeTimer.stop();
         failSafeTimer.reset();
-        holding = false;
+        isHolding = false;
     }
     
     @Override
     public void periodic() {
-        SmartDashboard.putNumber("left Encoder Velocity", leftEncoder1.getVelocity());
-        
-        if(!limitSwitch.get() && !holding) {
+        SmartDashboard.putNumber("Left motor Velocity", leftEncoder1.getVelocity());
+        SmartDashboard.putNumber("Right motor velocity", rightEncoder1.getVelocity());
+        if(limitSwitch.get() && !isHolding) {
             stop();
             failSafeTimer.start();
-            holding = true;
+            isHolding = true;
         }
-        if(holding && failSafeTimer.get()>3.8) {
+        if(isHolding && failSafeTimer.get()>3.8) {
             failSafeShoot();
         }
         
