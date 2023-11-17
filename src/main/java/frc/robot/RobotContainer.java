@@ -31,6 +31,7 @@ public class RobotContainer {
     new JoystickButton(controller, Button.kRightBumper.value).onFalse(new InstantCommand(shooter::outtakeEnded));
     new JoystickButton(controller, Button.kLeftBumper.value).onTrue(new InstantCommand(drivetrain::speedSwap));
     new JoystickButton(controller, Button.kA.value).onTrue(new InstantCommand(shooter::stop));
+    new JoystickButton(controller, Button.kB.value).onTrue(new InstantCommand(shooter::switchPower));
   }
   public Command startIntake() {
     return new IntakeStart(shooter, shooter.frontFlywheels(), shooter.backFlywheels());

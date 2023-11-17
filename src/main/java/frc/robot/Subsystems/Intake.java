@@ -34,7 +34,7 @@ public class Intake extends SubsystemBase {
     private DigitalInput limitSwitch = new DigitalInput(0);
     private RelativeEncoder leftEncoder1 = frontLeftFlyWheel.getEncoder();
     private RelativeEncoder rightEncoder1 = frontRightFlyWheel.getEncoder();
-    
+    private double shooterPower = 1;
     
     
     //Timers
@@ -54,7 +54,7 @@ public class Intake extends SubsystemBase {
     }
 
     public void shoot() { // Runs when right bumper is held down
-        frontFlywheels.set(1);
+        frontFlywheels.set(shooterPower);
         delayTimer.start();
         while(!didShoot) {
             if(delayTimer.get() > 0.5) {
@@ -78,6 +78,14 @@ public class Intake extends SubsystemBase {
         failSafeTimer.stop();
         failSafeTimer.reset();
         isHolding = false;
+    }
+
+    public void switchPower() {
+        if(shooterPower == 0.5) {
+            shooterPower = 1;
+        } else {
+            shooterPower = 0.5;
+        }
     }
     
     @Override
