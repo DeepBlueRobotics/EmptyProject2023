@@ -32,7 +32,7 @@ public final class Constants {
     }
 
     public static class OI {
-        public static final int CONTROLLER_PORT = 1;
+        public static final int CONTROLLER_PORT = 0;
 
     }
 }
