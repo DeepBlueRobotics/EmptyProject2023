@@ -35,8 +35,9 @@ public class Intake extends SubsystemBase {
     private RelativeEncoder leftEncoder1 = frontLeftFlyWheel.getEncoder();
     private RelativeEncoder rightEncoder1 = frontRightFlyWheel.getEncoder();
     private double shooterPower = 1;
-    
-    
+    public Intake() {
+        SmartDashboard.putNumber("Motor Voltage", 0);
+    }
     //Timers
     private final Timer failSafeTimer = new Timer();
     private final Timer delayTimer = new Timer();
@@ -92,6 +93,8 @@ public class Intake extends SubsystemBase {
     public void periodic() {
         SmartDashboard.putNumber("Left motor Velocity", leftEncoder1.getVelocity());
         SmartDashboard.putNumber("Right motor velocity", rightEncoder1.getVelocity());
+        double speed = SmartDashboard.getNumber("Motor Voltage", 0);
+        frontLeftFlyWheel.set(speed);
         if(limitSwitch.get() && !isHolding) {
             stop();
             failSafeTimer.start();
