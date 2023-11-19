@@ -35,6 +35,8 @@ public class Intake extends SubsystemBase {
     private RelativeEncoder leftEncoder1 = frontLeftFlyWheel.getEncoder();
     private RelativeEncoder rightEncoder1 = frontRightFlyWheel.getEncoder();
     private double shooterPower = 1;
+    private double maxVelocity;
+    private boolean touchingball = false;
     public Intake() {
         SmartDashboard.putNumber("Motor Voltage", 0);
     }
@@ -93,17 +95,32 @@ public class Intake extends SubsystemBase {
     public void periodic() {
         SmartDashboard.putNumber("Left motor Velocity", leftEncoder1.getVelocity());
         SmartDashboard.putNumber("Right motor velocity", rightEncoder1.getVelocity());
-        double speed = SmartDashboard.getNumber("Motor Voltage", 0);
-        frontLeftFlyWheel.set(speed);
+        // double speed = SmartDashboard.getNumber("Motor Voltage", 0);
+        // frontLeftFlyWheel.set(speed);
         if(limitSwitch.get() && !isHolding) {
             stop();
             failSafeTimer.start();
             isHolding = true;
         }
+
+        //Back up code for intake
+        // if(leftEncoder1.getVelocity() < maxVelocity) {
+        //     touchingball = true;
+        // }
+        // if(touchingball == true && leftEncoder1.getVelocity() >= maxVelocity) {
+        //     stop();
+        //     failSafeTimer.start();
+        //     touchingball = false;
+        //     isHolding = true;
+        // }
+
         if(isHolding && failSafeTimer.get()>3.8) {
             failSafeShoot();
         }
-        
+        if (leftEncoder1.getVelocity() > maxVelocity) {
+            maxVelocity = leftEncoder1.getVelocity();
+        }
+        SmartDashboard.putNumber("Max Velocity", maxVelocity);
     }
 }
 
