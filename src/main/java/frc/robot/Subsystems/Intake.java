@@ -101,8 +101,6 @@ public class Intake extends SubsystemBase {
     public void periodic() {
         SmartDashboard.putNumber("Left motor Velocity", leftEncoder1.getVelocity());
         SmartDashboard.putNumber("Right motor velocity", rightEncoder1.getVelocity());
-        // double speed = SmartDashboard.getNumber("Motor Voltage", 0);
-        // frontLeftFlyWheel.set(speed);
         if(limitSwitch.get() && !isHolding) {
             stop();
             failSafeTimer.start();
@@ -120,12 +118,19 @@ public class Intake extends SubsystemBase {
         //     isHolding = true;
         // }
 
+
         if(isHolding && failSafeTimer.get()>3.8) {
             failSafeShoot();
         }
         if (leftEncoder1.getVelocity() > maxVelocity) {
             maxVelocity = leftEncoder1.getVelocity();
         }
+        if(leftEncoder1.getVelocity() < maxVelocity-Constants.Intake.VELOCITY_DECREASE) {
+            stop();
+            failSafeTimer.start();
+            isHolding = true;
+        }
         SmartDashboard.putNumber("Max Velocity", maxVelocity);
+        SmartDashboard.putBoolean("limit switch", limitSwitch.get());
     }
 }
