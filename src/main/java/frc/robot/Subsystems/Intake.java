@@ -51,17 +51,21 @@ public class Intake extends SubsystemBase {
         return backFlywheels;
     }
     public void failSafeShoot() { // Runs when ball is held for over 3.8 seconds
-        frontFlywheels.set(1);
-        backFlywheels.set(1);
+        frontLeftFlyWheel.set(-1);
+        frontRightFlyWheel.set(1);
+        backLeftFlyWheel.set(-1);
+        backRightFlyWheel.set(1);
         outtakeEnded();
     }
 
     public void shoot() { // Runs when right bumper is held down
-        frontFlywheels.set(shooterPower);
+        frontLeftFlyWheel.set(-shooterPower);
+        frontRightFlyWheel.set(shooterPower);
         delayTimer.start();
         while(!didShoot) {
             if(delayTimer.get() > 0.5) {
-                backFlywheels.set(1);
+                backLeftFlyWheel.set(-1);
+                backRightFlyWheel.set(1);
                 didShoot = true;
             }
         }
@@ -76,8 +80,10 @@ public class Intake extends SubsystemBase {
     }
 
     public void outtakeEnded() { // Runs when right bumper is released
-        frontFlywheels.set(-0.1);
-        backFlywheels.set(-0.1);
+        frontLeftFlyWheel.set(0.1);
+        frontRightFlyWheel.set(-0.1);
+        backLeftFlyWheel.set(0.1);
+        backRightFlyWheel.set(-0.1);
         failSafeTimer.stop();
         failSafeTimer.reset();
         isHolding = false;
@@ -123,4 +129,3 @@ public class Intake extends SubsystemBase {
         SmartDashboard.putNumber("Max Velocity", maxVelocity);
     }
 }
-
