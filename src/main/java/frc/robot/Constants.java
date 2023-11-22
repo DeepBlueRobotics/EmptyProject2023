@@ -26,6 +26,7 @@ public final class Constants {
         public static final int BACK_LEFT_FLYWHEEL_PORT = 2;
         public static final int BACK_RIGHT_FLYWHEEL_PORT = 3;
         public static final double MAX_VELOCITY = 11000.82;
+        public static final double VELOCITY_DECREASE = 1000.5;
         public static final double KP = 0.9;
         public static final double KI = 0.5;
         public static final double KD = 0.2;
