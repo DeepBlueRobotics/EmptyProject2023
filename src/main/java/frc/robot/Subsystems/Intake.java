@@ -101,7 +101,7 @@ public class Intake extends SubsystemBase {
     public void periodic() {
         SmartDashboard.putNumber("Left motor Velocity", leftEncoder1.getVelocity());
         SmartDashboard.putNumber("Right motor velocity", rightEncoder1.getVelocity());
-        if(limitSwitch.get() && !isHolding) {
+        if(!limitSwitch.get() && !isHolding) {
             stop();
             failSafeTimer.start();
             isHolding = true;
