@@ -33,7 +33,8 @@ public final class Constants {
     }
 
     public static class OI {
-        public static final int CONTROLLER_PORT = 0;
+        public static final int DRIVER_CONTROLLER_PORT = 0;
+        public static final int MANIPULATOR_CONTROLLER_PORT = 1;
 
     }
 }
