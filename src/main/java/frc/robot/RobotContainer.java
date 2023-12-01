@@ -14,7 +14,6 @@ import frc.robot.commands.Autodrive;
 import frc.robot.commands.IntakeStart;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.XboxController.Button;
-
 public class RobotContainer {
   private final Intake shooter = new Intake();
   private final XboxController driverController = new XboxController(Constants.OI.DRIVER_CONTROLLER_PORT);
@@ -29,15 +28,14 @@ public class RobotContainer {
   private void configureBindings() {
     //Driver buttons
     new JoystickButton(driverController, Button.kRightBumper.value).onTrue(new InstantCommand(shooter::shoot));
-    new JoystickButton(driverController, Button.kRightBumper.value).onFalse(new InstantCommand(shooter::outtakeEnded));
     new JoystickButton(driverController, Button.kLeftBumper.value).onTrue(new InstantCommand(drivetrain::speedSwap));
     new JoystickButton(driverController, Button.kX.value).onTrue(new InstantCommand(drivetrain::swap));
     //Manipulator buttons
     new JoystickButton(manipulatorController, Button.kRightBumper.value).onTrue(new InstantCommand(shooter::stop));
-    new JoystickButton(manipulatorController, Button.kA.value).onTrue(new InstantCommand(() -> {shooter.switchPower(1);}));
-    new JoystickButton(manipulatorController, Button.kB.value).onTrue(new InstantCommand(() -> {shooter.switchPower(0.25);}));
-    new JoystickButton(manipulatorController, Button.kY.value).onTrue(new InstantCommand(() -> {shooter.switchPower(0.5);}));
-    new JoystickButton(manipulatorController, Button.kX.value).onTrue(new InstantCommand(() -> {shooter.switchPower(0.75);}));
+    new JoystickButton(manipulatorController, Button.kA.value).onTrue(new InstantCommand(() -> {shooter.switchPower(Constants.Intake.MAX_SPEED);}));
+    new JoystickButton(manipulatorController, Button.kB.value).onTrue(new InstantCommand(() -> {shooter.switchPower(Constants.Intake.LOW_SPEED);}));
+    new JoystickButton(manipulatorController, Button.kY.value).onTrue(new InstantCommand(() -> {shooter.switchPower(Constants.Intake.MID_SPEED);}));
+    new JoystickButton(manipulatorController, Button.kX.value).onTrue(new InstantCommand(() -> {shooter.switchPower(Constants.Intake.STRONG_SPEED);}));
   }
   public Command startIntake() {
     return new IntakeStart(shooter, shooter.frontFlywheels(), shooter.backFlywheels());

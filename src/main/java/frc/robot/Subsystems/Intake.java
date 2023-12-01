@@ -38,6 +38,7 @@ public class Intake extends SubsystemBase {
     private double maxVelocity;
     private boolean touchingball = false;
     public Intake() {
+        //frontLeftFlyWheel.setInverted(true);
         SmartDashboard.putNumber("Motor Voltage", 0);
     }
     //Timers
@@ -69,6 +70,7 @@ public class Intake extends SubsystemBase {
                 didShoot = true;
             }
         }
+        outtakeEnded();
         delayTimer.stop();
         delayTimer.reset();
         didShoot=false;

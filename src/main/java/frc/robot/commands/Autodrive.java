@@ -17,6 +17,7 @@ public class Autodrive extends CommandBase {
         addRequirements(drivetrain);
     }
     
+    // TODO: move into subsystem
     public static boolean isTank() {
         return isTank1;
     }
@@ -28,8 +29,7 @@ public class Autodrive extends CommandBase {
     @Override
     public void initialize() {
         timer.reset();
-        isTank();
-        isAuto();
+        
         timer.start();
         drivetrain.motorSpeeds(Constants.Drivetrain.AUTO_SPEED, Constants.Drivetrain.AUTO_SPEED);
     }

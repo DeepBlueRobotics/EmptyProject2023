@@ -12,7 +12,7 @@ import org.carlmontrobotics.lib199.MotorControllerFactory;
 import org.carlmontrobotics.lib199.MotorConfig;
 
 public class Drivetrain extends SubsystemBase {
-
+// TODO: should be private
 CANSparkMax leftMotors = MotorControllerFactory.createSparkMax(Constants.Drivetrain.LEFT_MOTOR_PORT,MotorConfig.NEO);
 CANSparkMax rightMotors = MotorControllerFactory.createSparkMax(Constants.Drivetrain.RIGHT_MOTOR_PORT,MotorConfig.NEO);
 
@@ -43,6 +43,7 @@ public void speedSwap () {
 
 @Override
 public void periodic() {
+    // TODO: Terrible practice to use variables in command classes, refactor after MA
     isAuto = Autodrive.isAuto();
     if(isAuto) {
         return;
@@ -54,7 +55,7 @@ public void periodic() {
 
     if(!isTank) {
         if(isSlow) {
-            motorSpeeds(left * 0.6,right * 0.6);
+            motorSpeeds(left * Constants.Drivetrain.SLOW_SPEED_MULTIPLIER,right * Constants.Drivetrain.SLOW_SPEED_MULTIPLIER);
         } else {
             motorSpeeds(left,right);
         }
