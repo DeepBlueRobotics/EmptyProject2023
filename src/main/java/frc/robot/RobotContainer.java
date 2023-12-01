@@ -31,9 +31,9 @@ public class RobotContainer {
     new JoystickButton(driverController, Button.kRightBumper.value).onTrue(new InstantCommand(shooter::shoot));
     new JoystickButton(driverController, Button.kRightBumper.value).onFalse(new InstantCommand(shooter::outtakeEnded));
     new JoystickButton(driverController, Button.kLeftBumper.value).onTrue(new InstantCommand(drivetrain::speedSwap));
+    new JoystickButton(driverController, Button.kX.value).onTrue(new InstantCommand(drivetrain::swap));
     //Manipulator buttons
     new JoystickButton(manipulatorController, Button.kRightBumper.value).onTrue(new InstantCommand(shooter::stop));
-    new JoystickButton(manipulatorController, Button.kLeftBumper.value).onTrue(new InstantCommand(drivetrain::swap));
     new JoystickButton(manipulatorController, Button.kA.value).onTrue(new InstantCommand(() -> {shooter.switchPower(1);}));
     new JoystickButton(manipulatorController, Button.kB.value).onTrue(new InstantCommand(() -> {shooter.switchPower(0.25);}));
     new JoystickButton(manipulatorController, Button.kY.value).onTrue(new InstantCommand(() -> {shooter.switchPower(0.5);}));
