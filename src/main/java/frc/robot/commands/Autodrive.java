@@ -10,7 +10,7 @@ import edu.wpi.first.wpilibj.Timer;
 public class Autodrive extends CommandBase {
     private final Drivetrain drivetrain;
     private final Timer timer = new Timer();
-    private static boolean isAuto1 = true;
+    private static boolean isAuto1 = false;
     private static boolean isTank1 = true;
     public Autodrive(Drivetrain drivetrain) {
         this.drivetrain = drivetrain;
@@ -27,6 +27,7 @@ public class Autodrive extends CommandBase {
 
     @Override
     public void initialize() {
+        isAuto1 = true;
         timer.reset();
         isTank();
         isAuto();

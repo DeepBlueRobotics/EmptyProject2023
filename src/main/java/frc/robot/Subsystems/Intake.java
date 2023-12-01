@@ -36,7 +36,7 @@ public class Intake extends SubsystemBase {
     private RelativeEncoder rightEncoder1 = frontRightFlyWheel.getEncoder();
     private double shooterPower = 1;
     private double maxVelocity;
-    private boolean touchingball = false;
+    // private boolean touchingball = false;
     public Intake() {
         SmartDashboard.putNumber("Motor Voltage", 0);
     }
@@ -44,11 +44,17 @@ public class Intake extends SubsystemBase {
     private final Timer failSafeTimer = new Timer();
     private final Timer delayTimer = new Timer();
 
-    public MotorControllerGroup frontFlywheels() {
-        return frontFlywheels;
+    public CANSparkMax frontLeftFlyWheel() {
+        return frontLeftFlyWheel;
     }
-    public MotorControllerGroup backFlywheels() {
-        return backFlywheels;
+    public CANSparkMax frontRightFlyWheel() {
+        return frontRightFlyWheel;
+    }
+    public CANSparkMax backLeftFlyWheel() {
+        return backLeftFlyWheel;
+    }
+    public CANSparkMax backRightFlyWheel() {
+        return backRightFlyWheel;
     }
     public void failSafeShoot() { // Runs when ball is held for over 3.8 seconds
         frontLeftFlyWheel.set(-1);
@@ -73,7 +79,7 @@ public class Intake extends SubsystemBase {
         delayTimer.reset();
 
         delayTimer.start();
-        while(delayTimer.get() < 0.5) {
+        while(delayTimer.get() < 1) {
             ;
         }
         outtakeEnded();
@@ -129,11 +135,15 @@ public class Intake extends SubsystemBase {
         if (leftEncoder1.getVelocity() > maxVelocity) {
             maxVelocity = leftEncoder1.getVelocity();
         }
+
+        /* 
         if(leftEncoder1.getVelocity() < maxVelocity-Constants.Intake.VELOCITY_DECREASE) {
             stop();
             failSafeTimer.start();
             isHolding = true;
         }
+        */
+
         SmartDashboard.putNumber("Max Velocity", maxVelocity);
         SmartDashboard.putBoolean("limit switch", limitSwitch.get());
     }

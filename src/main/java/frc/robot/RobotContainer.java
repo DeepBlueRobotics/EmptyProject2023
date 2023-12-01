@@ -36,7 +36,7 @@ public class RobotContainer {
     new JoystickButton(controller, Button.kX.value).onTrue(new InstantCommand(() -> {shooter.switchPower(Constants.Intake.STRONG_SPEED);}));
   }
   public Command startIntake() {
-    return new IntakeStart(shooter, shooter.frontFlywheels(), shooter.backFlywheels());
+    return new IntakeStart(shooter.frontLeftFlyWheel(), shooter.frontRightFlyWheel(), shooter.backLeftFlyWheel(), shooter.backRightFlyWheel());
   }
 
   public Command getAutonomousCommand() {
