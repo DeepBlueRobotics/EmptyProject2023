@@ -54,14 +54,14 @@ public void periodic() {
 
     if(!isTank) {
         if(isSlow) {
-            motorSpeeds(left * 0.6,right * 0.6);
+            motorSpeeds(left * Constants.Drivetrain.SLOW_SPEED_MULTIPLIER,right * Constants.Drivetrain.SLOW_SPEED_MULTIPLIER);
         } else {
             motorSpeeds(left,right);
         }
         
     } else if(isTank) {
         if (isSlow) {
-            motorSpeeds(speed * 0.6, -(controller.getRightY() * 0.6));
+            motorSpeeds(speed * Constants.Drivetrain.SLOW_SPEED_MULTIPLIER, -(controller.getRightY() * Constants.Drivetrain.SLOW_SPEED_MULTIPLIER));
         } else {
             motorSpeeds(speed, -(controller.getRightY()));
         }

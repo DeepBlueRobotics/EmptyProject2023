@@ -69,6 +69,13 @@ public class Intake extends SubsystemBase {
                 didShoot = true;
             }
         }
+        delayTimer.stop();
+        delayTimer.reset();
+
+        delayTimer.start();
+        while(delayTimer.get() < 0.5) {
+            ;
+        }
         outtakeEnded();
         delayTimer.stop();
         delayTimer.reset();
@@ -90,12 +97,8 @@ public class Intake extends SubsystemBase {
         isHolding = false;
     }
 
-    public void switchPower() {
-        if(shooterPower == 0.5) {
-            shooterPower = 1;
-        } else {
-            shooterPower = 0.5;
-        }
+    public void switchPower(double power) {
+       shooterPower = power;
     }
     
     @Override

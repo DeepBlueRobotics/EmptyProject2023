@@ -18,6 +18,7 @@ public final class Constants {
         public static final int LEFT_MOTOR_PORT = 11;
         public static final int RIGHT_MOTOR_PORT = 12; 
         public static final double AUTO_SPEED = 1;
+        public static final double SLOW_SPEED_MULTIPLIER = 0.6;
     }
 
     public static class Intake {
@@ -27,9 +28,10 @@ public final class Constants {
         public static final int BACK_RIGHT_FLYWHEEL_PORT = 3;
         public static final double MAX_VELOCITY = 11000.82;
         public static final double VELOCITY_DECREASE = 1000.5;
-        public static final double KP = 0.9;
-        public static final double KI = 0.5;
-        public static final double KD = 0.2;
+        public static final double SLOW_SPEED = 0.25;
+        public static final double MID_SPEED = 0.5;
+        public static final double STRONG_SPEED = 0.75;
+        public static final double MAX_SPEED = 1;
     }
 
     public static class OI {
