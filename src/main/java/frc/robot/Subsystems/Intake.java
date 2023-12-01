@@ -69,6 +69,7 @@ public class Intake extends SubsystemBase {
                 didShoot = true;
             }
         }
+        outtakeEnded();
         delayTimer.stop();
         delayTimer.reset();
         didShoot=false;
