@@ -106,7 +106,7 @@ public class Intake extends SubsystemBase {
     public void switchPower(double power) {
        shooterPower = power;
     }
-    
+
     @Override
     public void periodic() {
         SmartDashboard.putNumber("Left motor Velocity", leftEncoder1.getVelocity());

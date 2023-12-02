@@ -15,9 +15,9 @@ package frc.robot;
 public final class Constants {
     public static final double WHEEL_RADIUS = 2;
     public static class Drivetrain {
-        public static final int LEFT_MOTOR_PORT = 11;
-        public static final int RIGHT_MOTOR_PORT = 12; 
-        public static final double AUTO_SPEED = 1;
+        public static final int LEFT_MOTOR_PORT = 2;
+        public static final int RIGHT_MOTOR_PORT = 20; 
+        public static final double AUTO_SPEED = 0.4;
         public static final double SLOW_SPEED_MULTIPLIER = 0.6;
     }
 
