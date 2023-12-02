@@ -46,14 +46,16 @@ public void speedSwap () {
 public void periodic() {
     SmartDashboard.putBoolean("isTank", isTank);
     isAuto = Autodrive.isAuto();
+    //Short circuit if statement to stop controller drift during auto
     if(isAuto) {
         return;
     }
+
     double speed = -controller.getLeftY();
     double turn = controller.getLeftX();
     double left = speed+turn;
     double right = speed-turn;
-
+    //Arcade Drive
     if(!isTank) {
         if(isSlow) {
             motorSpeeds(left * Constants.Drivetrain.SLOW_SPEED_MULTIPLIER,right * Constants.Drivetrain.SLOW_SPEED_MULTIPLIER);
@@ -61,6 +63,7 @@ public void periodic() {
             motorSpeeds(left,right);
         }
         
+    //Tank Drive
     } else if(isTank) {
         if (isSlow) {
             motorSpeeds(speed * Constants.Drivetrain.SLOW_SPEED_MULTIPLIER, -(controller.getRightY() * Constants.Drivetrain.SLOW_SPEED_MULTIPLIER));

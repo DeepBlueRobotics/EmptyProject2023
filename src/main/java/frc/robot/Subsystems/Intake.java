@@ -43,8 +43,7 @@ public class Intake extends SubsystemBase {
     //Timers
     private final Timer failSafeTimer = new Timer();
     private final Timer delayTimer = new Timer();
-    private final Timer failSafeDelayTimer = new Timer();
-
+    //Getters for all motors
     public CANSparkMax frontLeftFlyWheel() {
         return frontLeftFlyWheel;
     }
@@ -62,6 +61,7 @@ public class Intake extends SubsystemBase {
         frontRightFlyWheel.set(0.25);
         backLeftFlyWheel.set(-0.25);
         backRightFlyWheel.set(0.25);
+       /* 
         failSafeDelayTimer.start();
         while(failSafeDelayTimer.get() < 0.5) {
             ;
@@ -69,6 +69,7 @@ public class Intake extends SubsystemBase {
         outtakeEnded();
         failSafeDelayTimer.stop();
         failSafeDelayTimer.reset();
+        */
     }
 
     public void shoot() { // Runs when right bumper is held down
@@ -124,6 +125,7 @@ public class Intake extends SubsystemBase {
     public void periodic() {
         SmartDashboard.putNumber("Left motor Velocity", leftEncoder1.getVelocity());
         SmartDashboard.putNumber("Right motor velocity", rightEncoder1.getVelocity());
+        //Limit switch stop
         if(!limitSwitch.get() && !isHolding) {
             frontLeftFlyWheel.set(0);
             frontRightFlyWheel.set(0);
