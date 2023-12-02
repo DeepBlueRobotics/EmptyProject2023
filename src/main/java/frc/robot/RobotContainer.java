@@ -31,14 +31,15 @@ public class RobotContainer {
     new JoystickButton(controller, Button.kRightBumper.value).onTrue(new InstantCommand(shooter::shoot));
     new JoystickButton(controller, Button.kLeftBumper.value).onTrue(new InstantCommand(drivetrain::speedSwap));
     new JoystickButton(controller, Button.kA.value).onTrue(new InstantCommand(() -> {shooter.switchPower(Constants.Intake.SLOW_SPEED);}));
-    //new JoystickButton(controller, Button.kB.value).onTrue(new InstantCommand(() -> {shooter.startIntake();}));
+    new JoystickButton(controller, Button.kB.value).onTrue(new InstantCommand(() -> {shooter.startIntake();}));
     new JoystickButton(controller, Button.kY.value).onTrue(new InstantCommand(() -> {shooter.switchPower(Constants.Intake.MID_SPEED);}));
     new JoystickButton(controller, Button.kStart.value).onTrue(new InstantCommand(() -> {shooter.switchPower(Constants.Intake.STRONG_SPEED);}));
   }
+  /* 
    public Command startIntake() {
-     return new IntakeStart(shooter.frontLeftFlyWheel(), shooter.frontRightFlyWheel(), shooter.backLeftFlyWheel(), shooter.backRightFlyWheel());
+     return new IntakeStart(shooter.backLeftFlyWheel(), shooter.backRightFlyWheel());
    }
-
+*/
   public Command getAutonomousCommand() {
     return new Autodrive(drivetrain);
   }

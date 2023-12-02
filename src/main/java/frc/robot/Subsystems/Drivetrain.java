@@ -52,7 +52,7 @@ public void periodic() {
     }
 
     double speed = -controller.getLeftY();
-    double turn = controller.getLeftX();
+    double turn = controller.getRightX();
     double left = speed+turn;
     double right = speed-turn;
     //Arcade Drive
@@ -60,7 +60,7 @@ public void periodic() {
         if(isSlow) {
             motorSpeeds(left * Constants.Drivetrain.SLOW_SPEED_MULTIPLIER,right * Constants.Drivetrain.SLOW_SPEED_MULTIPLIER);
         } else {
-            motorSpeeds(left,right);
+            motorSpeeds(left*0.6,right*0.6);
         }
         
     //Tank Drive

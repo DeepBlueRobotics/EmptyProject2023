@@ -23,17 +23,17 @@ import edu.wpi.first.wpilibj2.command.WaitUntilCommand;
 import frc.robot.Constants;
 
 public class Intake extends SubsystemBase {
-    private CANSparkMax frontLeftFlyWheel = MotorControllerFactory.createSparkMax(Constants.Intake.FRONT_LEFT_FLYWHEEL_PORT,MotorConfig.NEO);
-    private CANSparkMax frontRightFlyWheel = MotorControllerFactory.createSparkMax(Constants.Intake.FRONT_RIGHT_FLYWHEEL_PORT,MotorConfig.NEO);
+    //private CANSparkMax frontLeftFlyWheel = MotorControllerFactory.createSparkMax(Constants.Intake.FRONT_LEFT_FLYWHEEL_PORT,MotorConfig.NEO);
+    //private CANSparkMax frontRightFlyWheel = MotorControllerFactory.createSparkMax(Constants.Intake.FRONT_RIGHT_FLYWHEEL_PORT,MotorConfig.NEO);
     private CANSparkMax backLeftFlyWheel = MotorControllerFactory.createSparkMax(Constants.Intake.BACK_LEFT_FLYWHEEL_PORT,MotorConfig.NEO);
     private CANSparkMax backRightFlyWheel = MotorControllerFactory.createSparkMax(Constants.Intake.BACK_RIGHT_FLYWHEEL_PORT,MotorConfig.NEO);
-    private MotorControllerGroup frontFlywheels = new MotorControllerGroup(frontLeftFlyWheel,frontRightFlyWheel);
+    //private MotorControllerGroup frontFlywheels = new MotorControllerGroup(frontLeftFlyWheel,frontRightFlyWheel);
     private MotorControllerGroup backFlywheels = new MotorControllerGroup(backLeftFlyWheel,backRightFlyWheel);
     private boolean didShoot = false;
     private boolean isHolding = false;
     private DigitalInput limitSwitch = new DigitalInput(0);
-    private RelativeEncoder leftEncoder1 = frontLeftFlyWheel.getEncoder();
-    private RelativeEncoder rightEncoder1 = frontRightFlyWheel.getEncoder();
+    //private RelativeEncoder leftEncoder1 = frontLeftFlyWheel.getEncoder();
+    //private RelativeEncoder rightEncoder1 = frontRightFlyWheel.getEncoder();
     private double shooterPower = 0.5;
     private double maxVelocity;
     // private boolean touchingball = false;
@@ -44,12 +44,15 @@ public class Intake extends SubsystemBase {
     private final Timer failSafeTimer = new Timer();
     private final Timer delayTimer = new Timer();
     //Getters for all motors
+    /* */
+    /* 
     public CANSparkMax frontLeftFlyWheel() {
         return frontLeftFlyWheel;
     }
     public CANSparkMax frontRightFlyWheel() {
         return frontRightFlyWheel;
     }
+    */
     public CANSparkMax backLeftFlyWheel() {
         return backLeftFlyWheel;
     }
@@ -57,8 +60,8 @@ public class Intake extends SubsystemBase {
         return backRightFlyWheel;
     }
     public void failSafeShoot() { // Runs when ball is held for over 3.8 seconds
-        frontLeftFlyWheel.set(-0.25);
-        frontRightFlyWheel.set(0.25);
+      //  frontLeftFlyWheel.set(-0.25);
+      //  frontRightFlyWheel.set(0.25);
         backLeftFlyWheel.set(-0.25);
         backRightFlyWheel.set(0.25);
        /* 
@@ -73,8 +76,10 @@ public class Intake extends SubsystemBase {
     }
 
     public void shoot() { // Runs when right bumper is held down
-        frontLeftFlyWheel.set(-shooterPower);
-        frontRightFlyWheel.set(shooterPower);
+        
+        backLeftFlyWheel.set(-shooterPower);
+        backRightFlyWheel.set(shooterPower);
+        /* 
         delayTimer.start();
         while(!didShoot) {
             if(delayTimer.get() > 0.5) {
@@ -94,16 +99,17 @@ public class Intake extends SubsystemBase {
         delayTimer.stop();
         delayTimer.reset();
         didShoot=false;
+        */
     }
     
     public void stop() { // stops flyhweel motors
-        frontFlywheels.set(0);
+        //frontFlywheels.set(0);
         backFlywheels.set(0);
     }
 
     public void outtakeEnded() { // Runs when right bumper is released
-        frontLeftFlyWheel.set(0.15);
-        frontRightFlyWheel.set(-0.15);
+        //frontLeftFlyWheel.set(0.15);
+        //frontRightFlyWheel.set(-0.15);
         backLeftFlyWheel.set(0.15);
         backRightFlyWheel.set(-0.15);
         failSafeTimer.stop();
@@ -111,8 +117,8 @@ public class Intake extends SubsystemBase {
         isHolding = false;
     }
     public void startIntake() { // Runs when right bumper is released
-        frontLeftFlyWheel.set(0.1);
-        frontRightFlyWheel.set(-0.1);
+       // frontLeftFlyWheel.set(0.1);
+       // frontRightFlyWheel.set(-0.1);
         backLeftFlyWheel.set(0.1);
         backRightFlyWheel.set(-0.1);
         
@@ -123,15 +129,12 @@ public class Intake extends SubsystemBase {
 
     @Override
     public void periodic() {
-        SmartDashboard.putNumber("Left motor Velocity", leftEncoder1.getVelocity());
-        SmartDashboard.putNumber("Right motor velocity", rightEncoder1.getVelocity());
         //Limit switch stop
         if(!limitSwitch.get() && !isHolding) {
-            frontLeftFlyWheel.set(0);
-            frontRightFlyWheel.set(0);
+            //frontLeftFlyWheel.set(0);
+           // frontRightFlyWheel.set(0);
             backLeftFlyWheel.set(0.1);
             backRightFlyWheel.set(-0.1);
-            failSafeTimer.start();
             isHolding = true;
         }
 
