@@ -5,6 +5,7 @@ import com.revrobotics.RelativeEncoder;
 import edu.wpi.first.wpilibj.*;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 import frc.robot.commands.Autodrive;
@@ -43,6 +44,7 @@ public void speedSwap () {
 
 @Override
 public void periodic() {
+    SmartDashboard.putBoolean("isTank", isTank);
     isAuto = Autodrive.isAuto();
     if(isAuto) {
         return;
