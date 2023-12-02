@@ -43,7 +43,7 @@ public class Intake extends SubsystemBase {
     //Timers
     private final Timer failSafeTimer = new Timer();
     private final Timer delayTimer = new Timer();
-
+    //Getters for all motors
     public CANSparkMax frontLeftFlyWheel() {
         return frontLeftFlyWheel;
     }
@@ -70,8 +70,8 @@ public class Intake extends SubsystemBase {
         delayTimer.start();
         while(!didShoot) {
             if(delayTimer.get() > 0.5) {
-                backLeftFlyWheel.set(-1);
-                backRightFlyWheel.set(1);
+                backLeftFlyWheel.set(-Constants.Intake.MAX_SPEED);
+                backRightFlyWheel.set(Constants.Intake.MAX_SPEED);
                 didShoot = true;
             }
         }
@@ -119,6 +119,7 @@ public class Intake extends SubsystemBase {
     public void periodic() {
         SmartDashboard.putNumber("Left motor Velocity", leftEncoder1.getVelocity());
         SmartDashboard.putNumber("Right motor velocity", rightEncoder1.getVelocity());
+        //Limit switch stop
         if(!limitSwitch.get() && !isHolding) {
             stop();
             failSafeTimer.start();
@@ -136,10 +137,11 @@ public class Intake extends SubsystemBase {
         //     isHolding = true;
         // }
 
-
+        //Timer for failsafeShoot function
         if(isHolding && failSafeTimer.get()>3.8) {
             failSafeShoot();
         }
+        //Constantly gets max velocity
         if (leftEncoder1.getVelocity() > maxVelocity) {
             maxVelocity = leftEncoder1.getVelocity();
         }
