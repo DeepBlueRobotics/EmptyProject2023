@@ -29,7 +29,7 @@ public Drivetrain(XboxController controller) {
 }
 
 public void motorSpeeds(double y1,double y2) {
-    leftMotors.set(y1);
+    leftMotors.set(-y1);
     rightMotors.set(y2);
 }
 

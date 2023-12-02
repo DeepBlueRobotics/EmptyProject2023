@@ -21,6 +21,11 @@
           "open": true
         }
       },
+      "SparkMax[20]": {
+        "header": {
+          "open": true
+        }
+      },
       "SparkMax[2]": {
         "header": {
           "open": true
