@@ -94,15 +94,23 @@ public class Intake extends SubsystemBase {
     }
 
     public void outtakeEnded() { // Runs when right bumper is released
-        frontLeftFlyWheel.set(0.1);
-        frontRightFlyWheel.set(-0.1);
-        backLeftFlyWheel.set(0.1);
-        backRightFlyWheel.set(-0.1);
+        frontLeftFlyWheel.set(0);
+        frontRightFlyWheel.set(-0);
+        backLeftFlyWheel.set(0);
+        backRightFlyWheel.set(-0);
         failSafeTimer.stop();
         failSafeTimer.reset();
         isHolding = false;
     }
-
+    public void startIntake() { // Runs when right bumper is released
+        frontLeftFlyWheel.set(0.6);
+        frontRightFlyWheel.set(-0.6);
+        backLeftFlyWheel.set(0.6);
+        backRightFlyWheel.set(-0.6);
+        failSafeTimer.stop();
+        failSafeTimer.reset();
+        isHolding = false;
+    }
     public void switchPower(double power) {
        shooterPower = power;
     }
