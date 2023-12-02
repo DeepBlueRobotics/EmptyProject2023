@@ -34,7 +34,7 @@ public class Intake extends SubsystemBase {
     private DigitalInput limitSwitch = new DigitalInput(0);
     private RelativeEncoder leftEncoder1 = frontLeftFlyWheel.getEncoder();
     private RelativeEncoder rightEncoder1 = frontRightFlyWheel.getEncoder();
-    private double shooterPower = 1;
+    private double shooterPower = 0.5;
     private double maxVelocity;
     // private boolean touchingball = false;
     public Intake() {
@@ -43,6 +43,7 @@ public class Intake extends SubsystemBase {
     //Timers
     private final Timer failSafeTimer = new Timer();
     private final Timer delayTimer = new Timer();
+    private final Timer failSafeDelayTimer = new Timer();
 
     public CANSparkMax frontLeftFlyWheel() {
         return frontLeftFlyWheel;
@@ -57,11 +58,17 @@ public class Intake extends SubsystemBase {
         return backRightFlyWheel;
     }
     public void failSafeShoot() { // Runs when ball is held for over 3.8 seconds
-        frontLeftFlyWheel.set(-1);
-        frontRightFlyWheel.set(1);
-        backLeftFlyWheel.set(-1);
-        backRightFlyWheel.set(1);
+        frontLeftFlyWheel.set(-0.25);
+        frontRightFlyWheel.set(0.25);
+        backLeftFlyWheel.set(-0.25);
+        backRightFlyWheel.set(0.25);
+        failSafeDelayTimer.start();
+        while(failSafeDelayTimer.get() < 0.5) {
+            ;
+        }
         outtakeEnded();
+        failSafeDelayTimer.stop();
+        failSafeDelayTimer.reset();
     }
 
     public void shoot() { // Runs when right bumper is held down
@@ -70,8 +77,8 @@ public class Intake extends SubsystemBase {
         delayTimer.start();
         while(!didShoot) {
             if(delayTimer.get() > 0.5) {
-                backLeftFlyWheel.set(-1);
-                backRightFlyWheel.set(1);
+                backLeftFlyWheel.set(-shooterPower);
+                backRightFlyWheel.set(shooterPower);
                 didShoot = true;
             }
         }
@@ -94,22 +101,20 @@ public class Intake extends SubsystemBase {
     }
 
     public void outtakeEnded() { // Runs when right bumper is released
-        frontLeftFlyWheel.set(0.3);
-        frontRightFlyWheel.set(-0.3);
-        backLeftFlyWheel.set(0.3);
-        backRightFlyWheel.set(-0.3);
+        frontLeftFlyWheel.set(0.15);
+        frontRightFlyWheel.set(-0.15);
+        backLeftFlyWheel.set(0.15);
+        backRightFlyWheel.set(-0.15);
         failSafeTimer.stop();
         failSafeTimer.reset();
         isHolding = false;
     }
     public void startIntake() { // Runs when right bumper is released
-        frontLeftFlyWheel.set(0.6);
-        frontRightFlyWheel.set(-0.6);
-        backLeftFlyWheel.set(0.6);
-        backRightFlyWheel.set(-0.6);
-        failSafeTimer.stop();
-        failSafeTimer.reset();
-        isHolding = false;
+        frontLeftFlyWheel.set(0.1);
+        frontRightFlyWheel.set(-0.1);
+        backLeftFlyWheel.set(0.1);
+        backRightFlyWheel.set(-0.1);
+        
     }
     public void switchPower(double power) {
        shooterPower = power;
@@ -120,7 +125,10 @@ public class Intake extends SubsystemBase {
         SmartDashboard.putNumber("Left motor Velocity", leftEncoder1.getVelocity());
         SmartDashboard.putNumber("Right motor velocity", rightEncoder1.getVelocity());
         if(!limitSwitch.get() && !isHolding) {
-            stop();
+            frontLeftFlyWheel.set(0);
+            frontRightFlyWheel.set(0);
+            backLeftFlyWheel.set(0.1);
+            backRightFlyWheel.set(-0.1);
             failSafeTimer.start();
             isHolding = true;
         }
@@ -136,13 +144,10 @@ public class Intake extends SubsystemBase {
         //     isHolding = true;
         // }
 
-
-        if(isHolding && failSafeTimer.get()>3.8) {
+/* 
+        if(isHolding && failSafeTimer.get()>3.3) {
             failSafeShoot();
-        }
-        if (leftEncoder1.getVelocity() > maxVelocity) {
-            maxVelocity = leftEncoder1.getVelocity();
-        }
+        */      
 
         /* 
         if(leftEncoder1.getVelocity() < maxVelocity-Constants.Intake.VELOCITY_DECREASE) {
@@ -151,8 +156,7 @@ public class Intake extends SubsystemBase {
             isHolding = true;
         }
         */
-
-        SmartDashboard.putNumber("Max Velocity", maxVelocity);
-        SmartDashboard.putBoolean("limit switch", limitSwitch.get());
+    
+    
     }
 }

@@ -47,7 +47,7 @@ public class Autodrive extends CommandBase {
     }
     @Override
     public boolean isFinished() {
-        return timer.get()>2;
+        return timer.get()>1.5;
     }
 }
 
