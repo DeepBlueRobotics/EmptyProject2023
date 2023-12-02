@@ -94,10 +94,10 @@ public class Intake extends SubsystemBase {
     }
 
     public void outtakeEnded() { // Runs when right bumper is released
-        frontLeftFlyWheel.set(0);
-        frontRightFlyWheel.set(-0);
-        backLeftFlyWheel.set(0);
-        backRightFlyWheel.set(-0);
+        frontLeftFlyWheel.set(0.3);
+        frontRightFlyWheel.set(-0.3);
+        backLeftFlyWheel.set(0.3);
+        backRightFlyWheel.set(-0.3);
         failSafeTimer.stop();
         failSafeTimer.reset();
         isHolding = false;
