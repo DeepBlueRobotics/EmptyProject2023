@@ -4,11 +4,20 @@
 
 package frc.robot;
 
+import org.carlmontrobotics.lib199.MotorConfig;
+import org.carlmontrobotics.lib199.MotorControllerFactory;
+
+import com.revrobotics.CANSparkMax;
+
 import edu.wpi.first.wpilibj.TimedRobot;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 
 public class Robot extends TimedRobot {
+  CANSparkMax motor1 = MotorControllerFactory.createSparkMax(1, MotorConfig.NEO_550);
+  CANSparkMax motor2 = MotorControllerFactory.createSparkMax(9, MotorConfig.NEO_550);
+
   private Command m_autonomousCommand;
 
   private RobotContainer m_robotContainer;
@@ -16,11 +25,16 @@ public class Robot extends TimedRobot {
   @Override
   public void robotInit() {
     m_robotContainer = new RobotContainer();
+    SmartDashboard.putNumber("motor1 voltage", 0);
+    SmartDashboard.putNumber("motor2 voltage", 0);
   }
 
   @Override
   public void robotPeriodic() {
     CommandScheduler.getInstance().run();
+    
+    motor1.set(SmartDashboard.getNumber("motor1 voltage", 0));
+    motor2.set(SmartDashboard.getNumber("motor2 voltage", 0));
   }
 
   @Override
