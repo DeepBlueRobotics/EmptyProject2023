@@ -15,8 +15,7 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 
 public class Robot extends TimedRobot {
-  CANSparkMax motor1 = MotorControllerFactory.createSparkMax(1, MotorConfig.NEO_550);
-  CANSparkMax motor2 = MotorControllerFactory.createSparkMax(9, MotorConfig.NEO_550);
+  CANSparkMax motor1 = MotorControllerFactory.createSparkMax(18, MotorConfig.NEO);
 
   private Command m_autonomousCommand;
 
@@ -26,7 +25,6 @@ public class Robot extends TimedRobot {
   public void robotInit() {
     m_robotContainer = new RobotContainer();
     SmartDashboard.putNumber("motor1 voltage", 0);
-    SmartDashboard.putNumber("motor2 voltage", 0);
   }
 
   @Override
@@ -34,7 +32,6 @@ public class Robot extends TimedRobot {
     CommandScheduler.getInstance().run();
     
     motor1.set(SmartDashboard.getNumber("motor1 voltage", 0));
-    motor2.set(SmartDashboard.getNumber("motor2 voltage", 0));
   }
 
   @Override
